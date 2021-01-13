@@ -22,7 +22,7 @@ const wechat = function () {
       const params = {
         url: window.location.href
       }
-      const jsApiList = ['acanQRCode']
+      const jsApiList = ['scanQRCode']
       getJsConfig(params).then(res => {
         wxJS.config({
           debug: true,
