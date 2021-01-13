@@ -1,4 +1,4 @@
-import wx from './plugins/jweixin-1.6.0';
+import './jweixin-1.6.0';
 
 let wechat = function () {
 
