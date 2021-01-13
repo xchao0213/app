@@ -7,9 +7,10 @@ import 'vant/lib/index.css';
 
 import wechat from './plugins/wechat';
 
+VConsole && new VConsole();
+
 const app = createApp(App);
 app.config.globalProperties.$wechat = wechat;
-app.config.globalProperties.$console = new VConsole();
 
 app.use(Toast);
 app.use(router).mount('#app');
