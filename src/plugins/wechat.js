@@ -1,22 +1,24 @@
-import './jweixin-1.6.0';
+import {wx} from './jweixin-1.6.0';
 
-let wechat = function () {
+const wechat = function () {
 
-  /**
-   * 
-   */
-  function getEnv(callback) {
-    wx.miniProgram.getEnv(function (res) {
-      callback && callback(res)
-    })
+  return {
+      /**
+     * 
+     */
+    getEnv(callback) {
+      wx.miniProgram.getEnv(function (res) {
+        callback && callback(res)
+      })
+    },
+
+    /**
+     * 
+     */
+    initSDK() {
+
+    }
   }
-
-  /**
-   * 
-   */
-  function initSDK() {
-
-  }
-}
+}()
 
 export default wechat;
