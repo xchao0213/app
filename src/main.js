@@ -1,13 +1,11 @@
 import { createApp } from 'vue';
 import { Toast } from 'vant';
-import 'vconsole/dist/vconsole.min'
+// import VConsole from 'vconsole'
 import App from './App.vue';
 import router from './router';
 import 'vant/lib/index.css';
 
 import wechat from './plugins/wechat';
-
-VConsole && new VConsole();
 
 const app = createApp(App);
 app.config.globalProperties.$wechat = wechat;
