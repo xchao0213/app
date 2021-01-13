@@ -1,7 +1,7 @@
 import {wx} from './jweixin-1.6.0';
 import {getJsConfig} from '../api/wechat';
 
-let wxJS = wx;
+window.wxJS = wx;
 
 const wechat = function () {
 
@@ -35,6 +35,10 @@ const wechat = function () {
 
         wxJS.ready(() => {
           callback && callback()
+        })
+
+        wxJS.error(err=> {
+          console.log(err)
         })
         
       })
