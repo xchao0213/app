@@ -1,4 +1,5 @@
 import {wx} from './jweixin-1.6.0';
+import {getJsConfig} from '../api/wechat';
 
 const wechat = function () {
 
@@ -16,7 +17,12 @@ const wechat = function () {
      * 
      */
     initSDK() {
-
+      const params = {
+        url: window.location.href
+      }
+      getJsConfig(params).then(res => {
+        
+      })
     }
   }
 }()
