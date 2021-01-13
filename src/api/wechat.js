@@ -1,9 +1,9 @@
 import request from '../utils/request';
 
-export function getJsConfig(data) {
+export function getJsConfig(params) {
   return request({
-    url: '',
-    methods: '',
-    data
+    url: '/getConfig',
+    methods: 'get',
+    params
   })
 }
