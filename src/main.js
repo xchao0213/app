@@ -3,4 +3,9 @@ import App from './App.vue';
 import router from './router';
 import 'vant/lib/index.css';
 
-createApp(App).use(router).mount('#app');
+import wechat from './plugins/wechat';
+
+const app = createApp(App);
+app.config.globalProperties.$wechat = wechat;
+
+app.use(router).mount('#app');

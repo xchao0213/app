@@ -6,7 +6,12 @@
 
 <script>
 export default {
-  name: 'home'
+  name: 'home',
+  mounted() {
+    this.$wechat.getEnv(function (res) {
+      console.log(res)
+    })
+  }
 }
 </script>
 
