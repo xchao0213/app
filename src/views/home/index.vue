@@ -8,8 +8,9 @@
 export default {
   name: 'home',
   mounted() {
+    this.$toast('on home mounted')
     this.$wechat.getEnv(function (res) {
-      console.log(res)
+      this.$toast(res)
     })
   }
 }
