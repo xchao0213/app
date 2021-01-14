@@ -14,16 +14,17 @@ export default {
   },
   mounted() {
     this.$toast('on home mounted')
+    let _this = this;
     // this.$wechat.getEnv(function (res) {
     //   this.$toast(res)
     // })
-    this.$wechat.initSDK(function (){
-      this.$toast('initSDK ok')
+    this.$bridge.initSDK(this, function (){
+      _this.$toast('initSDK ok')
     })
   },
   methods: {
     scan() {
-      this.$wechat.scanQrcode(function(res) {
+      this.$bridge.scanQrcode(function(res) {
         this.$toast(res)
       })
     }

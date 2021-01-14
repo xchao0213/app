@@ -6,9 +6,11 @@ import router from './router';
 import 'vant/lib/index.css';
 
 import wechat from './plugins/wechat';
+import bridge from './plugins/bridge';
 
 const app = createApp(App);
-app.config.globalProperties.$wechat = wechat;
+app.use(wechat);
+app.use(bridge);
 
 app.use(Toast);
 app.use(router).mount('#app');
