@@ -22,6 +22,7 @@ const wechat = function () {
       }
       const jsApiList = ['scanQRCode']
       getJsConfig(params).then(res => {
+        console.log('res.signature', res.signature)
         wx.config({
           debug: true,
           appId: res.app_id,
