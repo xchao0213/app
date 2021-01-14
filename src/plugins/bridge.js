@@ -1,6 +1,6 @@
 import {getJsConfig} from '../api/wechat';
 
-function bridge () {
+let bridge = function () {
   let vm;
   return {
     initSDK(app, callback) {
@@ -45,7 +45,7 @@ function bridge () {
       })
     }
   }
-}
+}()
 
 bridge.install = (app) => {
   app.config.globalProperties.$bridge = bridge;

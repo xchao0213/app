@@ -18,6 +18,7 @@ export default {
     // this.$wechat.getEnv(function (res) {
     //   this.$toast(res)
     // })
+    console.log(this.$bridge)
     this.$bridge.initSDK(this, function (){
       _this.$toast('initSDK ok')
     })
