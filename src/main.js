@@ -1,5 +1,5 @@
 import { createApp } from 'vue';
-import { Toast } from 'vant';
+import { Toast, Dialog } from 'vant';
 // import VConsole from 'vconsole'
 import App from './App.vue';
 import router from './router';
@@ -13,4 +13,5 @@ app.use(wechat);
 app.use(bridge);
 
 app.use(Toast);
+app.use(Dialog);
 app.use(router).mount('#app');
