@@ -10,7 +10,9 @@ let bridge = function () {
       }
       const jsApiList = ['scanQRCode']
       getJsConfig(params).then(res => {
-        vm.$toast(res.signature)
+        vm.$dialog.alert({
+          message: signature,
+        });
         vm.$wechat.config({
           debug: true,
           appId: res.app_id,
