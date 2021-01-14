@@ -1,8 +1,6 @@
 import {wx} from './jweixin-1.6.0';
 import {getJsConfig} from '../api/wechat';
 
-window.wxJS = wx;
-
 const wechat = function () {
 
   return {
@@ -10,7 +8,7 @@ const wechat = function () {
      * 
      */
     getEnv(callback) {
-      wxJS.miniProgram.getEnv(function (res) {
+      wx.miniProgram.getEnv(function (res) {
         callback && callback(res)
       })
     },
@@ -24,7 +22,7 @@ const wechat = function () {
       }
       const jsApiList = ['scanQRCode']
       getJsConfig(params).then(res => {
-        wxJS.config({
+        wx.config({
           debug: true,
           appId: res.app_id,
           timestamp: res.timestamp,
@@ -33,18 +31,18 @@ const wechat = function () {
           jsApiList
         })
 
-        wxJS.ready(() => {
+        wx.ready(() => {
           callback && callback()
         })
 
-        wxJS.error(err=> {
+        wx.error(err=> {
           console.log(err)
         })
         
       })
     },
     scanQrcode(callback){
-      wxJS.scanQRCode({
+      wx.scanQRCode({
         needResult: 1,
         scanType: ['qrCode'],
         success(res) {
