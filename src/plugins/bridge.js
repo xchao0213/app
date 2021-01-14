@@ -10,7 +10,7 @@ let bridge = function () {
       }
       const jsApiList = ['scanQRCode']
       getJsConfig(params).then(res => {
-        console.log('res.signature', res.signature)
+        vm.$toast(res.signature)
         vm.$wechat.config({
           debug: true,
           appId: res.app_id,
@@ -30,7 +30,7 @@ let bridge = function () {
         
       })
     },
-    getEnv(app, callback) {
+    getEnv(callback) {
       vm.$wechat.miniProgram.getEnv(function (res) {
         callback && callback(res)
       })
