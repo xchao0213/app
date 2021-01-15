@@ -3,7 +3,6 @@ import {getJsConfig} from '../api/wechat';
 let bridge = function () {
   return {
     initSDK(app, callback) {
-      let vm = app
       const params = {
         url: window.location.href
       }
@@ -12,7 +11,7 @@ let bridge = function () {
         // vm.$dialog.alert({
         //   message: res.signature,
         // });
-        vm.$wechat.config({
+        app.$wechat.config({
           debug: true,
           appId: res.app_id,
           timestamp: res.timestamp,
@@ -21,23 +20,23 @@ let bridge = function () {
           jsApiList
         })
 
-        vm.$wechat.ready(() => {
+        app.$wechat.ready(() => {
           callback && callback()
         })
 
-        vm.$wechat.error(err=> {
+        app.$wechat.error(err=> {
           console.log(err)
         })
         
       })
     },
-    getEnv(callback) {
-      vm.$wechat.miniProgram.getEnv(function (res) {
+    getEnv(app, callback) {
+      app.$wechat.miniProgram.getEnv(function (res) {
         callback && callback(res)
       })
     },
-    scanQrcode(callback){
-      vm.$wechat.scanQRCode({
+    scanQrcode(app, callback){
+      app.$wechat.scanQRCode({
         needResult: 1,
         scanType: ['qrCode'],
         success(res) {
