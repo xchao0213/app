@@ -5,13 +5,13 @@ import App from './App.vue';
 import router from './router';
 import 'vant/lib/index.css';
 
-import wechat from './plugins/wechat';
+// import wechat from './plugins/wechat';
 import bridge from './plugins/bridge';
 
 const app = createApp(App);
-app.use(wechat);
-// app.use(bridge);
-app.config.globalProperties.$bridge = bridge;
+// app.use(wechat);
+app.use(bridge);
+// app.config.globalProperties.$bridge = bridge;
 
 app.use(Toast);
 app.use(Dialog);
