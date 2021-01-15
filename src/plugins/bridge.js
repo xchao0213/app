@@ -30,20 +30,20 @@ let bridge = function () {
         
       })
     },
-    getEnv(app, callback) {
-      app.$wechat.miniProgram.getEnv(function (res) {
-        callback && callback(res)
-      })
-    },
-    scanQrcode(app, callback){
-      app.$wechat.scanQRCode({
-        needResult: 1,
-        scanType: ['qrCode'],
-        success(res) {
-          return callback(res.resultStr)
-        }
-      })
-    }
+    // getEnv(app, callback) {
+    //   app.$wechat.miniProgram.getEnv(function (res) {
+    //     callback && callback(res)
+    //   })
+    // },
+    // scanQrcode(app, callback){
+    //   app.$wechat.scanQRCode({
+    //     needResult: 1,
+    //     scanType: ['qrCode'],
+    //     success(res) {
+    //       return callback(res.resultStr)
+    //     }
+    //   })
+    // }
   }
 }()
 
