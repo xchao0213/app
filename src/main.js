@@ -6,12 +6,12 @@ import router from './router';
 import 'vant/lib/index.css';
 
 // import wechat from './plugins/wechat';
+import { wx } from './plugins/jweixin-1.6.0'; 
 import bridge from './plugins/bridge';
-
 const app = createApp(App);
 // app.use(wechat);
+app.config.globalProperties.$wechat = wx;
 app.use(bridge);
-// app.config.globalProperties.$bridge = bridge;
 
 app.use(Toast);
 app.use(Dialog);

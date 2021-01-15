@@ -19,7 +19,7 @@ export default {
     //   this.$toast(res)
     // })
     console.log(this.$bridge)
-    this.$bridge.initSDK(function (){
+    this.$bridge.initSDK(this,function (){
       _this.$toast('initSDK ok')
     })
   },
