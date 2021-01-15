@@ -1,8 +1,10 @@
 import {getJsConfig} from '../api/wechat';
 
 let bridge = function () {
+  let vm;
   return {
     initSDK(app, callback) {
+      vm = app;
       const params = {
         url: window.location.href
       }
@@ -11,7 +13,7 @@ let bridge = function () {
         // vm.$dialog.alert({
         //   message: res.signature,
         // });
-        app.$wechat.config({
+        vm.$wechat.config({
           debug: true,
           appId: res.app_id,
           timestamp: res.timestamp,
@@ -20,30 +22,30 @@ let bridge = function () {
           jsApiList
         })
 
-        app.$wechat.ready(() => {
+        vm.$wechat.ready(() => {
           callback && callback()
         })
 
-        app.$wechat.error(err=> {
+        vm.$wechat.error(err=> {
           console.log(err)
         })
         
       })
     },
-    // getEnv(app, callback) {
-    //   app.$wechat.miniProgram.getEnv(function (res) {
-    //     callback && callback(res)
-    //   })
-    // },
-    // scanQrcode(app, callback){
-    //   app.$wechat.scanQRCode({
-    //     needResult: 1,
-    //     scanType: ['qrCode'],
-    //     success(res) {
-    //       return callback(res.resultStr)
-    //     }
-    //   })
-    // }
+    getEnv(callback) {
+      vm.$wechat.miniProgram.getEnv(function (res) {
+        callback && callback(res)
+      })
+    },
+    scanQrcode(callback){
+      vm.$wechat.scanQRCode({
+        needResult: 1,
+        scanType: ['qrCode'],
+        success(res) {
+          return callback(res.resultStr)
+        }
+      })
+    }
   }
 }()
 

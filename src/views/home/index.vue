@@ -25,12 +25,8 @@ export default {
   },
   methods: {
     scan() {
-      this.$wechat.scanQRCode({
-        needResult: 1,
-        scanType: ['qrCode'],
-        success(res) {
-          console.log(res.resultStr)
-        }
+      this.$$bridge.scanQrcode(function (res){
+        console.log(res)
       })
     }
   }
