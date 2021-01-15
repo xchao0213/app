@@ -49,9 +49,9 @@ export default {
     [CellGroup.name]: CellGroup,
   },
   mounted() {
-    this.$bridge.initSDK(this,function (){
-      _this.$toast('initSDK ok')
-    })
+    // this.$bridge.initSDK(this,function (){
+    //   _this.$toast('initSDK ok')
+    // })
   },
   methods: {
     scan() {
