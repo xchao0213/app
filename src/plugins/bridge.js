@@ -6,7 +6,7 @@ let bridge = function () {
     initSDK(app, callback) {
       vm = app;
       const params = {
-        url: window.location.href
+        url: window.location.href.split('#')[0]
       }
       const jsApiList = ['scanQRCode']
       getJsConfig(params).then(res => {
