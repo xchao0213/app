@@ -49,8 +49,8 @@ let bridge = function () {
   }
 }()
 
-bridge.install = (app) => {
-  app.config.globalProperties.$bridge = bridge;
-}
+// bridge.install = (app) => {
+//   app.config.globalProperties.$bridge = bridge;
+// }
 
 export default bridge;

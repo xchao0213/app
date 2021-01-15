@@ -10,7 +10,8 @@ import bridge from './plugins/bridge';
 
 const app = createApp(App);
 app.use(wechat);
-app.use(bridge);
+// app.use(bridge);
+app.config.globalProperties.$bridge = bridge;
 
 app.use(Toast);
 app.use(Dialog);
