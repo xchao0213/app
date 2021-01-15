@@ -6,7 +6,7 @@ let bridge = function () {
     initSDK(app, callback) {
       vm = app;
       const params = {
-        url: 'https://app.wozaizhao.com'
+        url: window.location.href
       }
       const jsApiList = ['scanQRCode']
       getJsConfig(params).then(res => {

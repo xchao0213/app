@@ -6,7 +6,7 @@ export const constantRouterMap = [
   {
     path: '/',
     component: () => import('../views/layouts/index.vue'),
-    redirect: '/settings',
+    redirect: '/home',
     meta: {
       title: '首页',
       keepAlive: false

@@ -32,6 +32,7 @@
       <van-cell icon="gold-coin-o" title="我的优惠券" is-link />
       <van-cell icon="gift-o" title="我收到的礼物" is-link />
     </van-cell-group>
+    <van-button @click="scan">Scan</van-button>
   </div>
 </template>
 
@@ -47,6 +48,18 @@ export default {
     [Cell.name]: Cell,
     [CellGroup.name]: CellGroup,
   },
+  mounted() {
+    this.$bridge.initSDK(this,function (){
+      _this.$toast('initSDK ok')
+    })
+  },
+  methods: {
+    scan() {
+      this.$bridge.scanQrcode(function (res){
+        console.log(res)
+      })
+    }
+  }
 }
 </script>
 

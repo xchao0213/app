@@ -25,7 +25,7 @@ export default {
   },
   methods: {
     scan() {
-      this.$$bridge.scanQrcode(function (res){
+      this.$bridge.scanQrcode(function (res){
         console.log(res)
       })
     }
