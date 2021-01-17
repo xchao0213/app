@@ -8,24 +8,50 @@
       <div class="address">
         <van-icon name="location" size="18" />{{data.address}}
       </div>
-      <div class="phone van-hairline--left">
+      <div class="phone" @click="toggleSheet(true)">
         <van-icon name="phone" size="18" />
       </div>
-      <div class="wechat van-hairline--left">
+      <div class="wechat">
         <van-icon name="wechat" size="18" />
       </div>
     </div>
+    <van-action-sheet
+      v-model:show="show"
+      :actions="actions"
+      cancel-text="取消"
+      description="联系电话"
+      close-on-click-action
+    />
   </div>
 </template>
 
 <script>
+import { ref } from 'vue';
+
 export default {
   name: 'wPlace',
   props: {
     data: {
       type: Object
     }
-  }
+  },
+  setup(props) {
+    const show = ref(false);
+    const {phone} = props.data
+    const actions = [
+      { name: `商家电话: ${phone}` },
+    ];
+
+    function toggleSheet(val) {
+      show.value = val
+    }
+
+    return {
+      show,
+      actions,
+      toggleSheet
+    };
+  },
 }
 </script>
 

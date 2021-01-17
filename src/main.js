@@ -1,5 +1,5 @@
 import { createApp } from 'vue';
-import { Toast, Dialog, Icon, Button, Tag } from 'vant';
+import { Toast, Dialog, Icon, Button, Tag, ActionSheet } from 'vant';
 // 移动端适配
 import 'lib-flexible/flexible.js'
 // import VConsole from 'vconsole'
@@ -21,4 +21,5 @@ app.use(Dialog);
 app.use(Icon);
 app.use(Button);
 app.use(Tag);
+app.use(ActionSheet);
 app.use(router).mount('#app');
