@@ -1,13 +1,26 @@
 <template>
   <div class="w-footer">
-    <van-button plain hairline round icon="good-job-o" size="small">10000赞</van-button>
-    <van-button plain hairline round icon="share-o" size="small">分享</van-button>
+    <van-button plain hairline round icon="good-job-o" size="small" @click="like">{{count}}赞</van-button>
+    <van-button plain hairline round icon="share-o" size="small" @click="share">分享</van-button>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'wFooter'
+  name: 'wFooter',
+  data() {
+    return {
+      count: 0
+    }
+  },
+  methods: {
+    like() {
+      this.count = this.count + 100;
+    },
+    share() {
+      this.count = this.count - 100;
+    }
+  }
 }
 </script>
 
