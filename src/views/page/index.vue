@@ -52,8 +52,9 @@ export default {
               city: '',
               county: '',
               tag: '浦东',
-              wechat: '',
-              phone: '021-61569338'
+              wechat: 'https://static.wozaizhao.com/wechat/easthospital.png',
+              phone: '021-61569338',
+              phoneRemark: '周一至周五8:00-17:00'
             }
           ]
         },

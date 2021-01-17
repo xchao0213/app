@@ -11,7 +11,7 @@
       <div class="phone" @click="toggleSheet(true)">
         <van-icon name="phone" size="18" />
       </div>
-      <div class="wechat">
+      <div class="wechat" @click="toggleWechat(true)">
         <van-icon name="wechat" size="18" />
       </div>
     </div>
@@ -22,6 +22,11 @@
       description="联系电话"
       close-on-click-action
     />
+    <van-action-sheet v-model:show="showWechat" title="微信号">
+      <div class="content">
+        <img class="qrcode" :src="data.wechat" alt="wechat">
+      </div>
+    </van-action-sheet>
   </div>
 </template>
 
@@ -37,19 +42,25 @@ export default {
   },
   setup(props) {
     const show = ref(false);
-    const {phone} = props.data
+    const showWechat = ref(true);
+    const {phone, phoneRemark} = props.data;
     const actions = [
-      { name: `商家电话: ${phone}` },
+      { name: `商家电话: ${phone}`, subname: phoneRemark },
     ];
 
     function toggleSheet(val) {
       show.value = val
     }
+    function toggleWechat(val) {
+      showWechat.value = val
+    }
 
     return {
       show,
+      showWechat,
       actions,
-      toggleSheet
+      toggleSheet,
+      toggleWechat
     };
   },
 }
