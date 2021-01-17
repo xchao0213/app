@@ -2,6 +2,7 @@
   <div class="home">
     home
     <van-button @click="scan">Scan</van-button>
+    <van-button @click="toPage">Page</van-button>
   </div>
 </template>
 
@@ -28,6 +29,9 @@ export default {
       this.$bridge.scanQrcode(function (res){
         console.log(res)
       })
+    },
+    toPage() {
+      this.$router.push('page')
     }
   }
 }

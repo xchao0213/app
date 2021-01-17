@@ -25,5 +25,9 @@ export const constantRouterMap = [
         meta: { title: '设置', keepAlive: false }
       }
     ]
+  },
+  {
+    path: '/page',
+    component: () => import('../views/page/index.vue')
   }
 ]
