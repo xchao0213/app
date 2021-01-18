@@ -27,8 +27,8 @@
     <van-popup v-model:show="showWechat" round>
       <div class="content">
         <img class="qrcode" :src="data.wechat" alt="wechat">
-        <p>长按图片识别二维码</p>
-        <p>{{env}}</p>
+        <p v-if="env">因小程序限制，请将二维码保存至相册后扫码</p>
+        <p v-else>长按图片识别二维码</p>
       </div>
     </van-popup>
     <!-- <van-action-sheet v-model:show="showWechat" title="微信号">
@@ -55,7 +55,7 @@ export default {
   mounted() {
     this.$bridge.getEnv((env) => {
       console.log(env)
-      this.data.env = env
+      this.data.env = env.miniprogram
     })
   },
   setup(props) {
