@@ -28,6 +28,7 @@
       <div class="content">
         <img class="qrcode" :src="data.wechat" alt="wechat">
         <p>长按图片识别二维码</p>
+        <p>{{env}}</p>
       </div>
     </van-popup>
     <!-- <van-action-sheet v-model:show="showWechat" title="微信号">
@@ -45,6 +46,16 @@ export default {
     data: {
       type: Object
     }
+  },
+  data() {
+    return {
+      env: ''
+    }
+  },
+  mounted() {
+    this.$bridge.getEnv((env) => {
+      this.data.env = env
+    })
   },
   setup(props) {
     const show = ref(false);
