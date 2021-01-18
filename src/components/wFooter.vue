@@ -19,6 +19,7 @@ export default {
     },
     share() {
       this.count = this.count - 100;
+      this.$bridge.postMessage('点了分享');
     }
   }
 }

@@ -45,6 +45,11 @@ let bridge = function () {
           return callback(res.resultStr)
         }
       })
+    },
+    postMessage(message) {
+      vm.$wechat.miniProgram.postMessage({
+        data: message
+      })
     }
   }
 }()

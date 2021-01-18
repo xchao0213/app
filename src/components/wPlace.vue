@@ -6,7 +6,9 @@
     <p class="name">{{data.name}}</p>
     <div class="contact flex-box">
       <div class="address">
-        <van-icon name="location" size="18" />{{data.address}}
+        <!-- <van-icon name="location" size="18" /> -->
+        {{data.address}}
+        <van-icon name="arrow" size="14" />
       </div>
       <div class="phone" @click="toggleSheet(true)">
         <van-icon name="phone" size="18" />
@@ -22,11 +24,15 @@
       description="联系电话"
       close-on-click-action
     />
-    <van-action-sheet v-model:show="showWechat" title="微信号">
+    <van-popup v-model:show="showWechat" round>
       <div class="content">
         <img class="qrcode" :src="data.wechat" alt="wechat">
+        <p>长按图片识别二维码</p>
       </div>
-    </van-action-sheet>
+    </van-popup>
+    <!-- <van-action-sheet v-model:show="showWechat" title="微信号">
+      
+    </van-action-sheet> -->
   </div>
 </template>
 
@@ -45,7 +51,7 @@ export default {
     const showWechat = ref(true);
     const {phone, phoneRemark} = props.data;
     const actions = [
-      { name: `商家电话: ${phone}`, subname: phoneRemark },
+      { name: `机构电话: ${phone}`, subname: phoneRemark },
     ];
 
     function toggleSheet(val) {
@@ -91,13 +97,14 @@ export default {
       flex: 1;
       display: flex;
       align-items: center;
+      font-size: 14px;
     }
     .phone{
-      padding-right: 5px;
+      padding-right: 10px;
     }
     .phone, .wechat{
       width: 18px;
-      padding-left: 5px;
+      padding-left: 10px;
     }
   }
 }
