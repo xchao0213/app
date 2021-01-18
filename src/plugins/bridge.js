@@ -8,7 +8,7 @@ let bridge = function () {
       const params = {
         url: window.location.href.split('#')[0]
       }
-      const jsApiList = ['scanQRCode']
+      const jsApiList = ['scanQRCode', 'openLocation']
       getJsConfig(params).then(res => {
         // vm.$dialog.alert({
         //   message: res.signature,
