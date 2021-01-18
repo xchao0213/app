@@ -54,7 +54,8 @@ export default {
               tag: '浦东',
               wechat: 'https://static.wozaizhao.com/wechat/easthospital.png',
               phone: '021-61569338',
-              phoneRemark: '周一至周五8:00-17:00'
+              phoneRemark: '周一至周五8:00-17:00',
+              location: {lng: 121.51331, lat: 31.23775}
             }
           ]
         },

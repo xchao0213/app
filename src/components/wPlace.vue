@@ -5,7 +5,7 @@
     </div>
     <p class="name">{{data.name}}</p>
     <div class="contact flex-box">
-      <div class="address">
+      <div class="address" @click="openMap">
         <!-- <van-icon name="location" size="18" /> -->
         {{data.address}}
         <van-icon name="arrow" size="14" />
@@ -69,6 +69,16 @@ export default {
       toggleWechat
     };
   },
+  methods: {
+    openMap() {
+      this.$bridge.openLocation({
+        latitude: this.data.location.lat,
+        longitude: this.data.location.lng,
+        name: this.data.name,
+        address: this.data.address, 
+      })
+    }
+  }
 }
 </script>
 
