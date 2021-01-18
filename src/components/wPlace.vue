@@ -54,6 +54,7 @@ export default {
   },
   mounted() {
     this.$bridge.getEnv((env) => {
+      console.log(env)
       this.data.env = env
     })
   },
