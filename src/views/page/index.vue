@@ -50,8 +50,8 @@ export default {
   },
   data() {
     return {
-      latitude: '',
-      longitude: ''
+      latitude: 12.212,
+      longitude: 313.222
     }
   },
   mounted() {
@@ -61,7 +61,8 @@ export default {
       // _this.$toast('initSDK ok')
       _this.$bridge.getLocation(function (res) {
         _this.latitude = res.latitude;
-        _this.longitude = res.longitude
+        _this.longitude = res.longitude;
+        _this.$toast(_this.latitude);
       })
     })
   },
