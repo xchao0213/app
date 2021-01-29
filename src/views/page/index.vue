@@ -2,7 +2,7 @@
   <div class="page">
     <div v-for="section in state.pageData" :key="section.id">
       <template v-if="Array.isArray(section.value)">
-        <component :is="'w-' + section.type" :data="content" v-for="content in section.value" :key="content.id" v-on:showSheet="sayHi"></component>
+        <component :is="'w-' + section.type" :latitude="latitude" :longitude="longitude" :data="content" v-for="content in section.value" :key="content.id" v-on:showSheet="sayHi"></component>
       </template>
       <template v-else>
         <component :is="'w-' + section.type" :data="section.value"></component>
@@ -48,13 +48,20 @@ export default {
     wFooter,
     welcomeButton
   },
+  data() {
+    return {
+      latitude: '',
+      longitude: ''
+    }
+  },
   mounted() {
     console.log('mounted')
     let _this = this;
     this.$bridge.initSDK(this,function (){
       // _this.$toast('initSDK ok')
       _this.$bridge.getLocation(function (res) {
-        _this.$toast(res.latitude)
+        _this.latitude = res.latitude;
+        _this.longitude = res.longitude
       })
     })
   },

@@ -8,7 +8,7 @@
     <div class="contact flex-box">
       <div class="address" @click="openMap">
         <!-- <van-icon name="location" size="18" /> -->
-        {{data.orgAddress}}
+        {{data.orgAddress}}{{latitude}}{{longitude}}
         <van-icon name="arrow" size="14" />
       </div>
       <div class="phone" @click="toggleSheet(true)">
@@ -40,6 +40,12 @@ export default {
   props: {
     data: {
       type: Object
+    },
+    latitude: {
+      type: Number
+    },
+    longitude: {
+      type: Number
     }
   },
   data() {

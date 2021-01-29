@@ -14,7 +14,7 @@ let bridge = function () {
         //   message: res.signature,
         // });
         vm.$wechat.config({
-          debug: true,
+          debug: false,
           appId: res.app_id,
           timestamp: res.timestamp,
           nonceStr: res.nonce_str,
