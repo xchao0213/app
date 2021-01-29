@@ -1,22 +1,33 @@
 <template>
   <div class="w-title">
-    <p class="title">{{data.text}}</p>
+    <p class="title">{{data.title}}</p>
     <div class="meta flex-box">
       <div>
-        <span class="author">早安君</span>
-        <span class="time">昨天 17:12</span>
+        <span class="author">{{data.author}}</span>
+        <span class="time">{{created}}</span>
       </div>
-      <span class="count">阅读 2453</span>
+      <span class="count">阅读 {{data.readCount}}</span>
     </div>
   </div>
 </template>
 
 <script>
+import { DateTime } from "luxon";
+
 export default {
   name: 'wTitle',
   props: {
     data: {
-      type: Object
+      type: Object,
+    }
+  },
+  data () {
+    return {
+    }
+  },
+  computed: {
+    created() {
+      return DateTime.fromISO(this.data.CreatedAt).toRelativeCalendar();
     }
   }
 }

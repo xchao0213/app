@@ -6,7 +6,12 @@
 
 <script>
 export default {
-  name: 'page'
+  setup() {
+    // mounted
+    onMounted(() => {
+      console.log('Component is mounted!')
+    })
+  }
 }
 </script>
 

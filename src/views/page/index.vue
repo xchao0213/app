@@ -1,69 +1,124 @@
 <template>
   <div class="page">
-    <div v-for="section in pageData" :key="section.id">
+    <div v-for="section in state.pageData" :key="section.id">
       <template v-if="Array.isArray(section.value)">
-        <component :is="'w-' + section.type" :data="content" v-for="content in section.value" :key="content.id"></component>
+        <component :is="'w-' + section.type" :data="content" v-for="content in section.value" :key="content.id" v-on:showSheet="sayHi"></component>
       </template>
       <template v-else>
         <component :is="'w-' + section.type" :data="section.value"></component>
       </template>
-      
     </div>
     <!-- <van-button type="primary">主要按钮</van-button> -->
+    <van-action-sheet
+      v-model:show="show"
+      :actions="state.actions"
+      cancel-text="取消"
+      description="联系电话"
+      close-on-click-action
+    />
   </div>
+  
 </template>
 
 <script>
 import { Button } from 'vant';
+import {
+  ref,
+  // watch,
+  // computed,
+  // nextTick,
+  onMounted,
+  reactive,
+  // createCommentVNode,
+} from 'vue';
+import { useRoute} from 'vue-router'
+import welcomeButton from '../../components/welcomeButton.vue';
 import wTitle from '../../components/wTitle.vue';
+import wTabs from '../../components/wTabs.vue';
 import wPlace from '../../components/wPlace.vue';
 import wFooter from '../../components/wFooter.vue';
+import { getPage, getPlaces } from '../../api/app';
 export default {
   name: 'page',
   components: {
     [Button.name]: Button,
     wTitle,
+    wTabs,
     wPlace,
-    wFooter
+    wFooter,
+    welcomeButton
   },
-  data() {
-    return {
-      pageData: [
+  mounted() {
+    console.log('mounted')
+    let _this = this;
+    this.$bridge.initSDK(this,function (){
+      // _this.$toast('initSDK ok')
+      _this.$bridge.getLocation(function (res) {
+        _this.$toast(res.latitude)
+      })
+    })
+  },
+  methods: {
+    sayHi() {
+      console.log('Hi!')
+    }
+  },
+  setup(props, { emit, slots }) {
+    const route = useRoute()
+    const show = ref(false);
+    const state = reactive({
+      page: {},
+      content: {},
+      pageData: [],
+      actions: []
+    })
+
+    const onShowSheet = (actions) => {
+      console.log('page onShowSheet')
+      state.actions = actions;
+      show.value = true;
+    }
+
+    onMounted(async () => {
+      console.log('onMounted')
+      const { id } = route.query;
+      const data = await getPage(id);
+      state.page = data;
+      const { ID, title, author, CreatedAt, readCount, abstract } = state.page;
+      state.pageData.push(
         {
           type: 'title',
-          id: 'fasfa',
+          id: ID,
           value: {
-            text: '上海市新冠病毒核酸检测采样机构',
-            author: '上海市卫生健康委员会 上海市中医药管理局',
-            createdAt: '',
-            readCount: 0,
-            abstract: '上海市公布的最新核酸检测采样机构，摘自上海市卫生健康委员会网站。'
+            title,
+            author,
+            CreatedAt,
+            readCount,
+            abstract
           }
-        },
-        {
-          type: 'place',
-          id: 'fwefwf',
-          value: [
-            {
-              id: '3243',
-              name: '东方医院(本部)',
-              address: '即墨路150号',
-              province: '',
-              city: '',
-              county: '',
-              tag: '浦东',
-              wechat: 'https://static.wozaizhao.com/wechat/easthospital.png',
-              phone: '021-61569338',
-              phoneRemark: '周一至周五8:00-17:00',
-              location: {lng: 121.51331, lat: 31.23775}
-            }
-          ]
-        },
-        {
-          type: 'footer'
         }
-      ],
-    }
+      );
+      switch (state.page.content) {
+        case 'places':
+          const places = await getPlaces();
+          const subPlaces = places.filter((ele, i) => i < 10)
+          const placeData = subPlaces.map(ele => {
+            return {
+              type: 'place',
+              id: ele.ID,
+              value: ele
+            }
+          })
+          console.log(placeData)
+          state.pageData = state.pageData.concat(placeData)
+          // state.content = {
+          //   type: 'places',
+          //   list: places
+          // };
+      }
+    })
+    
+    return { state, onShowSheet, show }
   }
 }
 </script>

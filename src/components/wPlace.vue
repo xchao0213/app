@@ -1,29 +1,24 @@
 <template>
   <div class="w-place shadow">
-    <div class="top-right">
-      <van-tag type="primary">{{data.tag}}</van-tag>
+    <div class="top-left">
+      <van-tag type="primary">{{data.countyName}}</van-tag>
     </div>
-    <p class="name">{{data.name}}</p>
+    <p class="name">{{data.orgName}}</p>
+    <van-rate />
     <div class="contact flex-box">
       <div class="address" @click="openMap">
         <!-- <van-icon name="location" size="18" /> -->
-        {{data.address}}
+        {{data.orgAddress}}
         <van-icon name="arrow" size="14" />
       </div>
       <div class="phone" @click="toggleSheet(true)">
         <van-icon name="phone" size="18" />
       </div>
-      <div class="wechat" @click="toggleWechat(true)">
+      <div class="wechat" v-on:click="$emit('showSheet')">
         <van-icon name="wechat" size="18" />
       </div>
     </div>
-    <van-action-sheet
-      v-model:show="show"
-      :actions="actions"
-      cancel-text="取消"
-      description="联系电话"
-      close-on-click-action
-    />
+    
     <van-popup v-model:show="showWechat" round>
       <div class="content">
         <img class="qrcode" :src="data.wechat" alt="wechat">
@@ -58,23 +53,26 @@ export default {
       this.data.env = env.miniprogram
     })
   },
-  setup(props) {
-    const show = ref(false);
-    const showWechat = ref(true);
-    const {phone, phoneRemark} = props.data;
-    const actions = [
-      { name: `机构电话: ${phone}`, subname: phoneRemark },
-    ];
+  emits: ['showSheet'],
+  setup(props, { emit }) {
+    const showWechat = ref(false);
+    let actions = []
+    if (props.data) {
+      const {phone, serviceTime} = props.data;
+      actions = [
+        { name: `机构电话: ${phone}`, subname: serviceTime },
+      ];
+    }
 
     function toggleSheet(val) {
-      show.value = val
+      console.log('toggleSheet')
+      emit('showSheet', actions)
     }
     function toggleWechat(val) {
       showWechat.value = val
     }
 
     return {
-      show,
       showWechat,
       actions,
       toggleSheet,
@@ -84,10 +82,10 @@ export default {
   methods: {
     openMap() {
       this.$bridge.openLocation({
-        latitude: this.data.location.lat,
-        longitude: this.data.location.lng,
-        name: this.data.name,
-        address: this.data.address, 
+        latitude:  this.data.lat,
+        longitude: this.data.lng,
+        name: this.data.orgName,
+        address: this.data.orgAddress, 
       })
     }
   }
@@ -100,21 +98,21 @@ export default {
   // width: 100%;
   color: #666;
   border-radius: 6px;
-  padding: 16px;
+  padding: 24px 16px 16px;
   margin-bottom: 16px;
-  .top-right{
+  .top-left{
     position: absolute;
-    right: 5px;
+    left: 5px;
     top: 5px;
   }
   .name{
     color: #333;
     font-size: 20px;
     font-weight: 500;
-    padding-bottom: 15px;
+    padding-bottom: 5px;
   }
   .contact{
-    margin-top: 5px;
+    margin-top: 15px;
     .address{
       flex: 1;
       display: flex;
