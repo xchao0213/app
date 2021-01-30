@@ -101,6 +101,7 @@ export default {
     onMounted(async () => {
       console.log('onMounted')
       const { id } = route.query;
+      await initSDK();
       const location = await getLocation();
       geolocation.longitude = location.longitude;
       geolocation.latitude = location.latitude;
