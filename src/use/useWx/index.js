@@ -8,7 +8,7 @@ export function useWx () {
       const params = {
         url: window.location.href.split('#')[0]
       }
-      const jsApiList = ['scanQRCode', 'openLocation']
+      const jsApiList = ['scanQRCode', 'openLocation', 'getLocation']
       getJsConfig(params).then(res => {
         wx.config({
           debug: true,
