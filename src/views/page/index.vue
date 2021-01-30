@@ -24,6 +24,7 @@
 import { Button } from 'vant';
 import {
   ref,
+  provide,
   // watch,
   // computed,
   // nextTick,
@@ -31,6 +32,8 @@ import {
   reactive,
   // createCommentVNode,
 } from 'vue';
+import { useWx } from '../../use/useWx';
+
 import { useRoute} from 'vue-router'
 import welcomeButton from '../../components/welcomeButton.vue';
 import wTitle from '../../components/wTitle.vue';
@@ -57,14 +60,14 @@ export default {
   mounted() {
     console.log('mounted')
     let _this = this;
-    this.$bridge.initSDK(this,function (){
-      // _this.$toast('initSDK ok')
-      _this.$bridge.getLocation(function (res) {
-        _this.latitude = res.latitude;
-        _this.longitude = res.longitude;
-        _this.$toast(_this.latitude);
-      })
-    })
+    // this.$bridge.initSDK(this,function (){
+    //   // _this.$toast('initSDK ok')
+    //   _this.$bridge.getLocation(function (res) {
+    //     _this.latitude = res.latitude;
+    //     _this.longitude = res.longitude;
+    //     _this.$toast(_this.latitude);
+    //   })
+    // })
   },
   methods: {
     sayHi() {
@@ -81,6 +84,14 @@ export default {
       actions: []
     })
 
+    const geolocation = reactive({
+      longitude: 90,
+      latitude: 135
+    })
+
+    const { initSDK, getLocation } = useWx();
+    provide('geolocation', geolocation)
+
     const onShowSheet = (actions) => {
       console.log('page onShowSheet')
       state.actions = actions;
@@ -90,6 +101,9 @@ export default {
     onMounted(async () => {
       console.log('onMounted')
       const { id } = route.query;
+      const location = await getLocation();
+      geolocation.longitude = location.longitude;
+      geolocation.latitude = location.latitude;
       const data = await getPage(id);
       state.page = data;
       const { ID, title, author, CreatedAt, readCount, abstract } = state.page;

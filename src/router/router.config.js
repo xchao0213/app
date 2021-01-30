@@ -21,7 +21,7 @@ export const constantRouterMap = [
       {
         path: '/settings',
         name: 'Settings',
-        component: () => import('../views/info/page.vue'),
+        component: () => import('../views/settings/index.vue'),
         meta: { title: '设置', keepAlive: false }
       }
     ]
