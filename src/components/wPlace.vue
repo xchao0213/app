@@ -8,7 +8,7 @@
     <div class="contact flex-box">
       <div class="address" @click="openMap">
         <!-- <van-icon name="location" size="18" /> -->
-        {{data.orgAddress}}{{userGeolocation.latitude}}{{userGeolocation.longitude}}
+        {{data.orgAddress}}{{data.distance}}
         <van-icon name="arrow" size="14" />
       </div>
       <div class="phone" @click="toggleSheet(true)">
@@ -33,7 +33,7 @@
 </template>
 
 <script>
-import { ref, inject } from 'vue';
+import { ref } from 'vue';
 
 export default {
   name: 'wPlace',
@@ -62,7 +62,7 @@ export default {
   emits: ['showSheet'],
   setup(props, { emit }) {
     const showWechat = ref(false);
-    const userGeolocation = inject('geolocation')
+    // const userGeolocation = inject('geolocation')
 
     let actions = []
     if (props.data) {
@@ -85,7 +85,7 @@ export default {
       actions,
       toggleSheet,
       toggleWechat,
-      userGeolocation
+      // userGeolocation
     };
   },
   methods: {

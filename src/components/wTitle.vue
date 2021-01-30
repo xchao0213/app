@@ -8,6 +8,7 @@
       </div>
       <span class="count">阅读 {{data.readCount}}</span>
     </div>
+    <div class="abstract">{{data.abstract}}</div>
   </div>
 </template>
 
@@ -47,6 +48,12 @@ export default {
       margin-right: 6px;
       color: #576b95;
     }
+  }
+  .abstract{
+    font-size: 16px;
+    color: #333;
+    padding-bottom: 16px;
+    text-indent: 40px;
   }
 }
 </style>

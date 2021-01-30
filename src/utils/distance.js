@@ -12,11 +12,11 @@ const getDistance = function(from, to) {
 
   const dLat = toRad(toLat - fromLat);
   const dLon = toRad(toLon - fromLon);
-  const fromLat = toRad(fromLat);
-  const toLat = toRad(toLat);
+  const fromLatRad = toRad(fromLat);
+  const toLatRad = toRad(toLat);
 
   const a = Math.pow(Math.sin(dLat / 2), 2) +
-          (Math.pow(Math.sin(dLon / 2), 2) * Math.cos(fromLat) * Math.cos(toLat));
+          (Math.pow(Math.sin(dLon / 2), 2) * Math.cos(fromLatRad) * Math.cos(toLatRad));
   const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 
   return RADIUS * c;

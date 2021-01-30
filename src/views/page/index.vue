@@ -22,9 +22,10 @@
 
 <script>
 import { Button } from 'vant';
+import { isWeixin } from '../../utils/index';
 import {
   ref,
-  provide,
+  // provide,
   // watch,
   // computed,
   // nextTick,
@@ -41,6 +42,7 @@ import wTabs from '../../components/wTabs.vue';
 import wPlace from '../../components/wPlace.vue';
 import wFooter from '../../components/wFooter.vue';
 import { getPage, getPlaces } from '../../api/app';
+import distance from '../../utils/distance';
 export default {
   name: 'page',
   components: {
@@ -50,12 +52,6 @@ export default {
     wPlace,
     wFooter,
     welcomeButton
-  },
-  data() {
-    return {
-      latitude: 12.212,
-      longitude: 313.222
-    }
   },
   mounted() {
     console.log('mounted')
@@ -84,13 +80,17 @@ export default {
       actions: []
     })
 
-    const geolocation = reactive({
-      longitude: 90,
-      latitude: 135
-    })
+    // const geolocation = reactive({
+    //   longitude: 31.23,
+    //   latitude: 121.47
+    // })
+    let geolocation = {
+      longitude: 31.23,
+      latitude: 121.47
+    }
 
-    const { initSDK, getLocation } = useWx();
-    provide('geolocation', geolocation)
+    const { initSDK, getEnv, getLocation } = useWx();
+    // provide('geolocation', geolocation)
 
     const onShowSheet = (actions) => {
       console.log('page onShowSheet')
@@ -99,46 +99,57 @@ export default {
     }
 
     onMounted(async () => {
-      console.log('onMounted')
-      const { id } = route.query;
-      await initSDK();
-      const location = await getLocation();
-      geolocation.longitude = location.longitude;
-      geolocation.latitude = location.latitude;
-      const data = await getPage(id);
-      state.page = data;
-      const { ID, title, author, CreatedAt, readCount, abstract } = state.page;
-      state.pageData.push(
-        {
-          type: 'title',
-          id: ID,
-          value: {
-            title,
-            author,
-            CreatedAt,
-            readCount,
-            abstract
-          }
+      try {
+        const { id } = route.query;
+        if (isWeixin()) {
+          await initSDK();
+          const env = await getEnv();
+          console.log(env)
+          const location = await getLocation();
+          console.log('location', location)
+          geolocation.longitude = location.longitude;
+          geolocation.latitude = location.latitude;
         }
-      );
-      switch (state.page.content) {
-        case 'places':
-          const places = await getPlaces();
-          const subPlaces = places.filter((ele, i) => i < 10)
-          const placeData = subPlaces.map(ele => {
-            return {
-              type: 'place',
-              id: ele.ID,
-              value: ele
+        
+        const data = await getPage(id);
+        state.page = data;
+        const { ID, title, author, CreatedAt, readCount, abstract } = state.page;
+        state.pageData.push(
+          {
+            type: 'title',
+            id: ID,
+            value: {
+              title,
+              author,
+              CreatedAt,
+              readCount,
+              abstract
             }
-          })
-          console.log(placeData)
-          state.pageData = state.pageData.concat(placeData)
-          // state.content = {
-          //   type: 'places',
-          //   list: places
-          // };
+          }
+        );
+        switch (state.page.content) {
+          case 'places':
+            const places = await getPlaces();
+            const subPlaces = places.filter((ele, i) => i < 30)
+            const placeData = subPlaces.map(ele => {
+              const d = distance(geolocation.latitude, geolocation.longitude, ele.lat, ele.lng);
+              return {
+                type: 'place',
+                id: ele.ID,
+                value: Object.assign({}, ele, {distance: d})
+              }
+            })
+            console.log(placeData)
+            state.pageData = state.pageData.concat(placeData)
+            // state.content = {
+            //   type: 'places',
+            //   list: places
+            // };
+        }
+      } catch (e) {
+        console.log(e)
       }
+      
     })
     
     return { state, onShowSheet, show }

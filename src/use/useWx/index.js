@@ -1,10 +1,13 @@
 import { wx } from '../../plugins/jweixin-1.6.0'; 
 import { getJsConfig } from '../../api/wechat';
-
+import { isWeixin } from '../../utils/index';
 export function useWx () {
 
   const initSDK = () => {
     return new Promise ((resolve, reject) => {
+      if (!isWeixin) {
+        reject('not in weixin');
+      }
       const params = {
         url: window.location.href.split('#')[0]
       }
@@ -27,15 +30,18 @@ export function useWx () {
         
       })
     })
-  }
+  };
 
-  // const getEnv = () => {
-  //   return new Promise((resolve, reject) => {
-  //     wx.miniProgram.getEnv(function (res) {
-  //       resolve(res)
-  //     })
-  //   })
-  // },
+  const getEnv = () => {
+    return new Promise((resolve, reject) => {
+      if (!isWeixin) {
+        reject('not in weixin');
+      }
+      wx.miniProgram.getEnv(function (res) {
+        resolve(res)
+      })
+    })
+  };
   // const scanQrcode = () => {
   //   return new Promise((resolve, reject) => {
   //     wx.scanQRCode({
@@ -64,6 +70,9 @@ export function useWx () {
   // },
   const getLocation = () => {
     return new Promise((resolve, reject) => {
+      if (!isWeixin) {
+        reject('not in weixin');
+      }
       wx.getLocation({
         type: 'gcj02', // 默认为wgs84的gps坐标，如果要返回直接给openLocation用的火星坐标，可传入'gcj02'
         success: function (res) {
@@ -72,6 +81,9 @@ export function useWx () {
           // var longitude = res.longitude; // 经度，浮点数，范围为180 ~ -180。
           // var speed = res.speed; // 速度，以米/每秒计
           // var accuracy = res.accuracy; // 位置精度
+        },
+        fail: function (err) {
+          reject(err)
         }
       });
     })
@@ -79,7 +91,7 @@ export function useWx () {
     
   return {
     initSDK,
-    // getEnv,
+    getEnv,
     // scanQrcode,
     // postMessage,
     getLocation,
