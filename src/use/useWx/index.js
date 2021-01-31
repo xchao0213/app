@@ -12,7 +12,7 @@ export function useWx () {
       const params = {
         url: window.location.href.split('#')[0]
       }
-      const jsApiList = ['scanQRCode', 'openLocation', 'getLocation', 'updateAppMessageShareData', 'updateTimelineShareData']
+      const jsApiList = ['scanQRCode', 'openLocation', 'getLocation', 'onMenuShareAppMessage', 'onMenuShareTimeline']
       getJsConfig(params).then(res => {
         wx.config({
           debug: true,
@@ -95,7 +95,7 @@ export function useWx () {
 
   const setAppShareData = (params) => {
     return new Promise((resolve, reject) => {
-      wx.updateAppMessageShareData({ 
+      wx.onMenuShareAppMessage({ 
         title: params.title, // 分享标题
         desc: params.desc, // 分享描述
         link: params.link, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
@@ -109,7 +109,7 @@ export function useWx () {
 
   const setTimelineShareData = (params) => {
     return new Promise((resolve, reject) => {
-      wx.updateTimelineShareData({ 
+      wx.onMenuShareTimeline({ 
         title: params.title, // 分享标题
         link: params.link, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
         imgUrl: params.imgUrl, // 分享图标
