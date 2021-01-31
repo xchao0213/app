@@ -104,7 +104,7 @@ export default {
             title: `我在找-${state.page.title}`,
             desc: state.page.abstract,
             link: window.location.href,
-            imgUrl: 'https://static.wozaizhao.com/logo.svg'
+            imgUrl: 'https://static.wozaizhao.com/logo.png'
           }
           // await setAppShareData(params);
           await setTimelineShareData(params);
