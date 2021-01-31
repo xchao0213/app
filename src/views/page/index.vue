@@ -39,7 +39,6 @@ import {
 import { useWx } from '../../use/useWx';
 
 import { useRoute} from 'vue-router'
-import welcomeButton from '../../components/welcomeButton.vue';
 import wTitle from '../../components/wTitle.vue';
 import wTabs from '../../components/wTabs.vue';
 import wPlace from '../../components/wPlace.vue';
@@ -54,8 +53,7 @@ export default {
     wTitle,
     wTabs,
     wPlace,
-    wFooter,
-    welcomeButton
+    wFooter
   },
   setup(props, { emit, slots }) {
     const route = useRoute()
