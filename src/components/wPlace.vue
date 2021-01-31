@@ -34,18 +34,13 @@
 
 <script>
 import { ref } from 'vue';
+import { useWx } from '../use/useWx';
 
 export default {
   name: 'wPlace',
   props: {
     data: {
       type: Object
-    },
-    latitude: {
-      type: Number
-    },
-    longitude: {
-      type: Number
     }
   },
   data() {
@@ -58,31 +53,38 @@ export default {
       return ` 距${this.data.distance.toFixed(1)}km`
     }
   },
-  mounted() {
-    // this.$bridge.getEnv((env) => {
-    //   console.log(env)
-    //   this.data.env = env.miniprogram
-    // })
-  },
   emits: ['showSheet'],
   setup(props, { emit }) {
     const showWechat = ref(false);
+    const data = props.data;
     // const userGeolocation = inject('geolocation')
+    const { initSDK, openLocation } = useWx();
 
     let actions = []
-    if (props.data) {
-      const {phone, serviceTime} = props.data;
-      actions = [
-        { name: `机构电话: ${phone}`, subname: serviceTime },
-      ];
-    }
+    // if (props.data) {
+    //   const {phone, serviceTime} = props.data;
+    //   actions = [
+    //     { name: `机构电话: ${phone}`, subname: serviceTime },
+    //   ];
+    // }
 
     function toggleSheet(val) {
       console.log('toggleSheet')
-      emit('showSheet', actions)
+      // emit('showSheet', actions)
     }
     function toggleWechat(val) {
       showWechat.value = val
+    }
+
+    function openMap() {
+      console.log(data)
+      openLocation({
+        latitude:  data.lat,
+        longitude: data.lng,
+        name: data.orgName,
+        address: data.orgAddress, 
+      })
+    
     }
 
     return {
@@ -90,18 +92,9 @@ export default {
       actions,
       toggleSheet,
       toggleWechat,
+      openMap
       // userGeolocation
     };
-  },
-  methods: {
-    openMap() {
-      this.$bridge.openLocation({
-        latitude:  this.data.lat,
-        longitude: this.data.lng,
-        name: this.data.orgName,
-        address: this.data.orgAddress, 
-      })
-    }
   }
 }
 </script>

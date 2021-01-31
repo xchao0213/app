@@ -58,16 +58,19 @@ export function useWx () {
   //     data: message
   //   })
   // },
-  // const openLocation = (params) =>{
-  //   wx.openLocation({
-  //     latitude: params.latitude, // 纬度，浮点数，范围为90 ~ -90
-  //     longitude: params.longitude, // 经度，浮点数，范围为180 ~ -180。
-  //     name: params.name, // 位置名
-  //     address: params.address, // 地址详情说明
-  //     scale: 10, // 地图缩放级别,整形值,范围从1~28。默认为最大
-  //     infoUrl: '' // 在查看位置界面底部显示的超链接,可点击跳转
-  //   });
-  // },
+  const openLocation = (params) =>{
+    if (!isWeixin) {
+      return;
+    }
+    wx.openLocation({
+      latitude: params.latitude, // 纬度，浮点数，范围为90 ~ -90
+      longitude: params.longitude, // 经度，浮点数，范围为180 ~ -180。
+      name: params.name, // 位置名
+      address: params.address, // 地址详情说明
+      scale: 10, // 地图缩放级别,整形值,范围从1~28。默认为最大
+      infoUrl: '' // 在查看位置界面底部显示的超链接,可点击跳转
+    });
+  }
   const getLocation = () => {
     return new Promise((resolve, reject) => {
       if (!isWeixin) {
@@ -95,6 +98,6 @@ export function useWx () {
     // scanQrcode,
     // postMessage,
     getLocation,
-    // openLocation
+    openLocation
   };
 };
