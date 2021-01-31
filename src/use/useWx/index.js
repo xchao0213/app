@@ -1,6 +1,7 @@
 import { wx } from '../../plugins/jweixin-1.6.0'; 
 import { getJsConfig } from '../../api/wechat';
 import { isWeixin } from '../../utils/index';
+
 export function useWx () {
 
   const initSDK = () => {
@@ -11,7 +12,7 @@ export function useWx () {
       const params = {
         url: window.location.href.split('#')[0]
       }
-      const jsApiList = ['scanQRCode', 'openLocation', 'getLocation']
+      const jsApiList = ['scanQRCode', 'openLocation', 'getLocation', 'updateAppMessageShareData', 'updateTimelineShareData']
       getJsConfig(params).then(res => {
         wx.config({
           debug: true,
@@ -91,6 +92,33 @@ export function useWx () {
       });
     })
   }
+
+  const setAppShareData = (params) => {
+    return new Promise((resolve, reject) => {
+      wx.updateAppMessageShareData({ 
+        title: params.title, // 分享标题
+        desc: params.desc, // 分享描述
+        link: params.link, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+        imgUrl: params.imgUrl, // 分享图标
+        success: function () {
+          resolve('updateAppMessageShareData ok')
+        }
+      })  
+    })
+  }
+
+  const setTimelineShareData = (params) => {
+    return new Promise((resolve, reject) => {
+      wx.updateTimelineShareData({ 
+        title: params.title, // 分享标题
+        link: params.link, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+        imgUrl: params.imgUrl, // 分享图标
+        success: function () {
+          resolve('updateTimelineShareData ok')
+        }
+      })
+    })
+  }
     
   return {
     initSDK,
@@ -98,6 +126,8 @@ export function useWx () {
     // scanQrcode,
     // postMessage,
     getLocation,
-    openLocation
+    openLocation,
+    setAppShareData,
+    setTimelineShareData
   };
 };

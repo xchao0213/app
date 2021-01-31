@@ -1,13 +1,16 @@
 <template>
   <div class="page">
-    <div v-for="section in pageData" :key="section.id">
-      <template v-if="Array.isArray(section.value)">
-        <component :is="'w-' + section.type" :latitude="latitude" :longitude="longitude" :data="content" v-for="content in section.value" :key="content.id" v-on:showSheet="sayHi"></component>
-      </template>
-      <template v-else>
-        <component :is="'w-' + section.type" :data="section.value" @change="onChange"></component>
-      </template>
-    </div>
+    <van-list
+      v-model:loading="state.loading"
+      :finished="state.finished"
+      finished-text="没有更多了"
+      :immediate-check="false"
+      @load="onLoad"
+    >
+      <div v-for="section in pageData" :key="section.id">
+        <component :is="'w-' + section.type" :data="section.value" @change="onChange" v-on:showSheet="onShowSheet"></component>
+      </div>
+    </van-list>
     <!-- <van-button type="primary">主要按钮</van-button> -->
     <van-action-sheet
       v-model:show="show"
@@ -54,11 +57,6 @@ export default {
     wFooter,
     welcomeButton
   },
-  methods: {
-    sayHi() {
-      console.log('Hi!')
-    }
-  },
   setup(props, { emit, slots }) {
     const route = useRoute()
     const show = ref(false);
@@ -66,6 +64,8 @@ export default {
       page: {},
       content: {},
       tabKey: '全部',
+      loading: false,
+      finished: false,
       // pageData: [],
       actions: [],
     })
@@ -79,11 +79,10 @@ export default {
       latitude: 31.23
     }
 
-    const { initSDK, getEnv, getLocation } = useWx();
+    const { initSDK, getEnv, getLocation, setAppShareData, setTimelineShareData } = useWx();
     // provide('geolocation', geolocation)
 
     const onShowSheet = (actions) => {
-      console.log('page onShowSheet')
       state.actions = actions;
       show.value = true;
     }
@@ -101,6 +100,17 @@ export default {
         
         const data = await getPage(id);
         state.page = data;
+
+        if (isWeixin()) {
+          const params = {
+            title: `我在找-${state.page.title}`,
+            desc: state.page.abstract,
+            link: window.location.href,
+            imgUrl: 'https://static.wozaizhao.com/logo.svg'
+          }
+          await setAppShareData(params);
+          await setTimelineShareData(params);
+        }
         
         switch (state.page.content) {
           case 'places':
@@ -119,6 +129,10 @@ export default {
     const onChange = (e) => {
       console.log(e)
       state.tabKey = e;
+    }
+
+    const onLoad = () => {
+      console.log("onLoad")
     }
     
     const pageData = computed(() => {
@@ -168,7 +182,7 @@ export default {
       }
       return componentData;
     })
-    return { state, onShowSheet, show, pageData, onChange }
+    return { state, onShowSheet, show, pageData, onChange, onLoad }
   }
 }
 </script>

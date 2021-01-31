@@ -1,7 +1,7 @@
 <template>
   <div class="w-tabs">
     <van-sticky>
-    <van-tabs v-if="data.items.length > 0" v-model:active="activeName" @click="onClick">
+    <van-tabs v-if="data.items.length > 0" color="#5385CD" v-model:active="activeName" @click="onClick">
       <van-tab v-for="item in data.items" :title="item" :name="item" :key="item">
       </van-tab>
     </van-tabs>

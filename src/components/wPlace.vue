@@ -4,7 +4,7 @@
       <van-tag type="primary">{{data.countyName}}</van-tag>
     </div>
     <p class="name">{{data.orgName}}</p>
-    <van-rate />
+    <!-- <van-rate /> -->
     <div class="contact flex-box">
       <div class="address" @click="openMap">
         <!-- <van-icon name="location" size="18" /> -->
@@ -14,9 +14,9 @@
       <div class="phone" @click="toggleSheet(true)">
         <van-icon name="phone" size="18" />
       </div>
-      <div class="wechat" v-on:click="$emit('showSheet')">
+      <!-- <div class="wechat" v-on:click="$emit('showSheet')">
         <van-icon name="wechat" size="18" />
-      </div>
+      </div> -->
     </div>
     
     <van-popup v-model:show="showWechat" round>
@@ -61,16 +61,15 @@ export default {
     const { initSDK, openLocation } = useWx();
 
     let actions = []
-    // if (props.data) {
-    //   const {phone, serviceTime} = props.data;
-    //   actions = [
-    //     { name: `机构电话: ${phone}`, subname: serviceTime },
-    //   ];
-    // }
+    if (props.data) {
+      const {phone, serviceTime} = props.data;
+      actions = [
+        { name: `咨询电话: ${phone}`, subname: serviceTime },
+      ];
+    }
 
     function toggleSheet(val) {
-      console.log('toggleSheet')
-      // emit('showSheet', actions)
+      emit('showSheet', actions)
     }
     function toggleWechat(val) {
       showWechat.value = val
