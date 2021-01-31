@@ -1,6 +1,6 @@
 <template>
   <div class="w-tabs">
-    <van-tabs v-if="data.items.length > 0">
+    <van-tabs v-if="data.items.length > 0" sticky>
       <van-tab v-for="item in data.items" :title="item" :key="item">
       </van-tab>
     </van-tabs>

@@ -113,7 +113,7 @@ export default {
   color: #666;
   border-radius: 6px;
   padding: 24px 16px 16px;
-  margin-bottom: 16px;
+  margin-top: 16px;
   .top-left{
     position: absolute;
     left: 5px;

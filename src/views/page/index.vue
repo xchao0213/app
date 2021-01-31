@@ -43,6 +43,7 @@ import wPlace from '../../components/wPlace.vue';
 import wFooter from '../../components/wFooter.vue';
 import { getPage, getPlaces } from '../../api/app';
 import distance from '../../utils/distance';
+import { uniKey } from '../../utils' 
 export default {
   name: 'page',
   components: {
@@ -77,7 +78,7 @@ export default {
       page: {},
       content: {},
       pageData: [],
-      actions: []
+      actions: [],
     })
 
     // const geolocation = reactive({
@@ -130,6 +131,17 @@ export default {
         switch (state.page.content) {
           case 'places':
             const places = await getPlaces();
+            // 如果在页面中存在筛选元素
+            const tabs = uniKey(places, 'countyName');
+            state.pageData.push(
+            {
+              type: 'tabs',
+              id: 'tabs',
+              value: {
+                items: tabs
+              }
+            }
+          );
             const subPlaces = places.filter((ele, i) => i < 30)
             const placeData = subPlaces.map(ele => {
               const d = distance(geolocation.latitude, geolocation.longitude, ele.lat, ele.lng);
