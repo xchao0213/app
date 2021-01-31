@@ -5,7 +5,7 @@
         <component :is="'w-' + section.type" :latitude="latitude" :longitude="longitude" :data="content" v-for="content in section.value" :key="content.id" v-on:showSheet="sayHi"></component>
       </template>
       <template v-else>
-        <component :is="'w-' + section.type" :data="section.value"></component>
+        <component :is="'w-' + section.type" :data="section.value" @change="onChange"></component>
       </template>
     </div>
     <!-- <van-button type="primary">主要按钮</van-button> -->
@@ -65,6 +65,7 @@ export default {
     const state = reactive({
       page: {},
       content: {},
+      tabKey: '全部',
       // pageData: [],
       actions: [],
     })
@@ -114,6 +115,11 @@ export default {
       }
       
     })
+
+    const onChange = (e) => {
+      console.log(e)
+      state.tabKey = e;
+    }
     
     const pageData = computed(() => {
       let componentData = [];
@@ -148,7 +154,8 @@ export default {
         );
       }
       if (state.content.list && state.content.list.length > 0) {
-        const listByFilter = state.content.list.filter((ele, i) => i < 30)
+
+        const listByFilter = state.tabKey === '全部' ? state.content.list.filter((ele, i) => i < 30) : state.content.list.filter((ele, i) => { return ele.countyName === state.tabKey && i < 30})
         const placeData = listByFilter.map(ele => {
         const d = distance(geolocation.latitude, geolocation.longitude, ele.lat, ele.lng);
           return {
@@ -157,14 +164,11 @@ export default {
             value: Object.assign(ele, {distance: d})
           }
         })
-        console.log('placeData', placeData)
-        console.log('before concat', componentData)
         componentData.push(...placeData)
-        console.log('after concat', componentData)
       }
       return componentData;
     })
-    return { state, onShowSheet, show, pageData }
+    return { state, onShowSheet, show, pageData, onChange }
   }
 }
 </script>

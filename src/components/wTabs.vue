@@ -19,11 +19,12 @@ export default {
       type: Object
     }
   },
-  setup() {
+  emits: ['change'],
+  setup(props, {emit}) {
     const activeName = ref('a');
 
     const onClick = (e) => {
-      console.log(e)
+      emit('change', e)
     }
 
     return { activeName, onClick};
