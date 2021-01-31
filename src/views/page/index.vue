@@ -155,7 +155,7 @@ export default {
       }
       if (state.content.list && state.content.list.length > 0) {
 
-        const listByFilter = state.tabKey === '全部' ? state.content.list.filter((ele, i) => i < 30) : state.content.list.filter((ele, i) => { return ele.countyName === state.tabKey && i < 30})
+        const listByFilter = state.tabKey === '全部' ? state.content.list.filter((ele, i) => i < 30) : state.content.list.filter((ele) => { return ele.countyName === state.tabKey})
         const placeData = listByFilter.map(ele => {
         const d = distance(geolocation.latitude, geolocation.longitude, ele.lat, ele.lng);
           return {
