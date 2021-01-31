@@ -85,8 +85,8 @@ export default {
     //   latitude: 121.47
     // })
     let geolocation = {
-      longitude: 31.23,
-      latitude: 121.47
+      longitude: 121.47,
+      latitude: 31.23
     }
 
     const { initSDK, getEnv, getLocation } = useWx();

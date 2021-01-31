@@ -8,7 +8,7 @@
     <div class="contact flex-box">
       <div class="address" @click="openMap">
         <!-- <van-icon name="location" size="18" /> -->
-        {{data.orgAddress}}{{data.distance}}
+        {{data.orgAddress}}{{distanceH}}
         <van-icon name="arrow" size="14" />
       </div>
       <div class="phone" @click="toggleSheet(true)">
@@ -51,6 +51,11 @@ export default {
   data() {
     return {
       env: ''
+    }
+  },
+  computed: {
+    distanceH() {
+      return ` 距${this.data.distance.toFixed(1)}km`
     }
   },
   mounted() {
