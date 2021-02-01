@@ -1,7 +1,7 @@
 <template>
   <div class="w-place shadow">
     <div class="top-left">
-      <van-tag type="primary">{{data.countyName}}</van-tag>
+      <van-tag :color="countyTagColor(data.countyName)" type="primary">{{data.countyName}}</van-tag>
     </div>
     <p class="name">{{data.orgName}}</p>
     <!-- <van-rate /> -->
@@ -33,6 +33,26 @@
 </template>
 
 <script>
+const colors = {
+  '闵行': '#ee0a24',
+  '徐汇': '#1989fa',
+  '宝山': '#ff976a',
+  '崇明': '#ed6a0c',
+  '奉贤': '#ff8917',
+  '虹口': '#07c160',
+  '黄浦': '#ee0a24',
+  '嘉定': '#1989fa',
+  '金山': '#ff976a',
+  '静安': '#ed6a0c',
+  '浦东': '#ff8917',
+  '普陀': '#07c160',
+  '青浦': '#ee0a24',
+  '松江': '#1989fa',
+  '杨浦': '#ff976a',
+  '长宁': '#ed6a0c',
+  '黄浦': '#ff8917'
+}
+
 import { ref } from 'vue';
 import { useWx } from '../use/useWx';
 
@@ -76,7 +96,6 @@ export default {
     }
 
     function openMap() {
-      console.log(data)
       openLocation({
         latitude:  data.lat,
         longitude: data.lng,
@@ -86,12 +105,17 @@ export default {
     
     }
 
+    function countyTagColor(e) {
+      return colors[e]
+    }
+
     return {
       showWechat,
       actions,
       toggleSheet,
       toggleWechat,
-      openMap
+      openMap,
+      countyTagColor
       // userGeolocation
     };
   }

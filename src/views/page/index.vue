@@ -127,6 +127,7 @@ export default {
             // 如果在页面中存在筛选元素
             if (state.content.list && "countyName") {
               const tabs = uniKey(state.content.list, 'countyName');
+              console.log(tabs)
               state.pageHeader.push(
                 {
                   type: 'tabs',
