@@ -84,7 +84,7 @@ export default {
     if (props.data) {
       const {phone, serviceTime} = props.data;
       actions = [
-        { name: `咨询电话: ${phone}`, subname: serviceTime },
+        { name: `咨询电话: ${phone}`, subname: serviceTime, phone: phone },
       ];
     }
 

@@ -14,11 +14,13 @@
         </div>
       </van-list>
     </van-pull-refresh>
-
+    <a id="phone" :href="'tel:' + state.phone">{{state.phone}}</a>
+    <!-- <a :href="'tel:' + state.actions[0].phone"></a> -->
     <!-- <van-button type="primary">主要按钮</van-button> -->
     <van-action-sheet
       v-model:show="show"
       :actions="state.actions"
+      @select="onSelect"
       cancel-text="取消"
       description="联系电话"
       close-on-click-action
@@ -75,6 +77,7 @@ export default {
       pageContent: [],
       pageFooter: [],
       actions: [],
+      phone: ''
     })
 
     // const geolocation = reactive({
@@ -91,8 +94,17 @@ export default {
 
     const onShowSheet = (actions) => {
       state.actions = actions;
+      state.phone = actions[0].phone;
       show.value = true;
     }
+
+    const onSelect = (item) => {
+      console.log(item)
+      document.getElementById("phone").click();
+      // 默认情况下点击选项时不会自动收起
+      // 可以通过 close-on-click-action 属性开启自动收起
+      show.value = false;
+    };
 
     onMounted(async () => {
       const { id } = route.query;
@@ -226,7 +238,7 @@ export default {
       state.refreshing = false;
        
     }
-    return { state, onShowSheet, show, pageData, onChange, onLoad, onRefresh }
+    return { state, onShowSheet, show, pageData, onChange, onSelect, onLoad, onRefresh }
   }
 }
 </script>
@@ -235,5 +247,8 @@ export default {
 .page{
   padding: 24px 16px 16px;
   background: #fff;
+}
+#phone{
+  opacity: 0;
 }
 </style>
