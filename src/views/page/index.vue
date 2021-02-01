@@ -64,7 +64,11 @@ export default {
       tabKey: '全部',
       loading: false,
       finished: false,
-      // pageData: [],
+      pageNum: 0,
+      pageSize: 15,
+      pageHeader: [],
+      pageContent: [],
+      pageFooter: [],
       actions: [],
     })
 
@@ -90,6 +94,23 @@ export default {
       try {
         const data = await getPage(id);
         state.page = data;
+        if (state.page) {
+          const { ID, title, author, CreatedAt, readCount, abstract } = state.page;
+          state.pageHeader.push(
+            {
+              type: 'title',
+              id: ID,
+              value: {
+                title,
+                author,
+                CreatedAt,
+                readCount,
+                abstract
+              }
+            }
+          )
+        }
+
           
         switch (state.page.content) {
           case 'places':
@@ -98,7 +119,22 @@ export default {
               type: 'places',
               list: places
             };
+            // 如果在页面中存在筛选元素
+            if (state.content.list && "countyName") {
+              const tabs = uniKey(state.content.list, 'countyName');
+              state.pageHeader.push(
+                {
+                  type: 'tabs',
+                  id: 'tabs',
+                  value: {
+                    items: tabs
+                  }
+                }
+              );
+            }
         }
+
+        fetchPageData();
       
         if (isWeixin()) {
           await initSDK();
@@ -124,48 +160,37 @@ export default {
     const onChange = (e) => {
       console.log(e)
       state.tabKey = e;
+      state.pageNum = 0;
+      state.pageContent = [];
+      fetchPageData();
     }
 
     const onLoad = () => {
-      console.log("onLoad")
+      state.loading = true;
+      state.pageNum = state.pageNum + 1;
+      fetchPageData();
     }
-    
-    const pageData = computed(() => {
-      let componentData = [];
-      if (state.page) {
-        const { ID, title, author, CreatedAt, readCount, abstract } = state.page;
-        componentData.push(
-          {
-            type: 'title',
-            id: ID,
-            value: {
-              title,
-              author,
-              CreatedAt,
-              readCount,
-              abstract
-            }
-          }
-        );
-      }
-      // 如果在页面中存在筛选元素
-      if (state.content.list && "countyName") {
-        const tabs = uniKey(state.content.list, 'countyName');
-        console.log('tabs', tabs)
-        componentData.push(
-          {
-            type: 'tabs',
-            id: 'tabs',
-            value: {
-              items: tabs
-            }
-          }
-        );
-      }
-      if (state.content.list && state.content.list.length > 0) {
 
-        const listByFilter = state.tabKey === '全部' ? state.content.list.filter((ele, i) => i < 30) : state.content.list.filter((ele) => { return ele.countyName === state.tabKey})
-        const placeData = listByFilter.map(ele => {
+    const pageData = computed(() => {
+      let page = [];
+      state.pageHeader.length > 0 && page.push(...state.pageHeader);
+      state.pageContent.length > 0 && page.push(...state.pageContent);
+      state.pageFooter.length > 0 && page.push(...state.pageFooter);
+      return page;
+    })
+    
+    const fetchPageData = () => {
+      let componentData = [];
+      
+      if (state.content.list && state.content.list.length > 0) {
+        const start = state.pageNum * state.pageSize;
+        const end = state.pageNum * state.pageSize + state.pageSize;
+        const listByFilter = state.tabKey === '全部' ? state.content.list : state.content.list.filter((ele) => { return ele.countyName === state.tabKey});
+        const listByPage = listByFilter.filter((ele, i) => i >= start && i < end);
+        if (listByPage.length === 0) {
+          state.finished = true;
+        }
+        const placeData = listByPage.map(ele => {
         const d = distance(geolocation.latitude, geolocation.longitude, ele.lat, ele.lng);
           return {
             type: 'place',
@@ -175,8 +200,14 @@ export default {
         })
         componentData.push(...placeData)
       }
-      return componentData;
-    })
+      if (state.pageNum === 0) {
+        state.pageContent = componentData;
+      } else {
+        state.pageContent.push(...componentData);
+      }
+      state.loading = false;
+       
+    }
     return { state, onShowSheet, show, pageData, onChange, onLoad }
   }
 }
