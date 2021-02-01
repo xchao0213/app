@@ -106,7 +106,7 @@ export default {
             link: window.location.href,
             imgUrl: 'https://static.wozaizhao.com/logo.png'
           }
-          // await setAppShareData(params);
+          await setAppShareData(params);
           await setTimelineShareData(params);
         }
         
