@@ -88,18 +88,24 @@ export default {
     onMounted(async () => {
       const { id } = route.query;
       try {
+        const data = await getPage(id);
+        state.page = data;
+          
+        switch (state.page.content) {
+          case 'places':
+            const places = await getPlaces();
+            state.content = {
+              type: 'places',
+              list: places
+            };
+        }
+      
         if (isWeixin()) {
           await initSDK();
           const env = await getEnv();
           const location = await getLocation();
           geolocation.longitude = location.longitude;
           geolocation.latitude = location.latitude;
-        }
-        
-        const data = await getPage(id);
-        state.page = data;
-
-        if (isWeixin()) {
           const params = {
             title: `我在找-${state.page.title}`,
             desc: state.page.abstract,
@@ -108,15 +114,6 @@ export default {
           }
           await setAppShareData(params);
           await setTimelineShareData(params);
-        }
-        
-        switch (state.page.content) {
-          case 'places':
-            const places = await getPlaces();
-            state.content = {
-              type: 'places',
-              list: places
-            };
         }
       } catch (e) {
         console.log(e)
