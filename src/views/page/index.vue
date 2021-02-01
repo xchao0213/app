@@ -1,16 +1,20 @@
 <template>
   <div class="page">
-    <van-list
-      v-model:loading="state.loading"
-      :finished="state.finished"
-      finished-text="没有更多了"
-      :immediate-check="false"
-      @load="onLoad"
-    >
-      <div v-for="section in pageData" :key="section.id">
-        <component :is="'w-' + section.type" :data="section.value" @change="onChange" v-on:showSheet="onShowSheet"></component>
-      </div>
-    </van-list>
+    <van-pull-refresh v-model="state.refreshing" @refresh="onRefresh">
+
+      <van-list
+        v-model:loading="state.loading"
+        :finished="state.finished"
+        finished-text="没有更多了"
+        :immediate-check="false"
+        @load="onLoad"
+      >
+        <div v-for="section in pageData" :key="section.id">
+          <component :is="'w-' + section.type" :data="section.value" @change="onChange" v-on:showSheet="onShowSheet"></component>
+        </div>
+      </van-list>
+    </van-pull-refresh>
+
     <!-- <van-button type="primary">主要按钮</van-button> -->
     <van-action-sheet
       v-model:show="show"
@@ -64,6 +68,7 @@ export default {
       tabKey: '全部',
       loading: false,
       finished: false,
+      refreshing: false,
       pageNum: 0,
       pageSize: 15,
       pageHeader: [],
@@ -171,6 +176,17 @@ export default {
       fetchPageData();
     }
 
+    const onRefresh = () => {
+      // 清空列表数据
+      state.finished = false;
+
+      // 重新加载数据
+      // 将 loading 设置为 true，表示处于加载状态
+      state.loading = true;
+      state.pageNum = 0;
+      state.pageContent = [];
+      fetchPageData();
+    };
     const pageData = computed(() => {
       let page = [];
       state.pageHeader.length > 0 && page.push(...state.pageHeader);
@@ -206,9 +222,10 @@ export default {
         state.pageContent.push(...componentData);
       }
       state.loading = false;
+      state.refreshing = false;
        
     }
-    return { state, onShowSheet, show, pageData, onChange, onLoad }
+    return { state, onShowSheet, show, pageData, onChange, onLoad, onRefresh }
   }
 }
 </script>
