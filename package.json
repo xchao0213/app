@@ -8,10 +8,10 @@
   },
   "dependencies": {
     "axios": "^0.21.1",
+    "eruda": "^2.4.1",
     "lib-flexible": "^0.3.2",
     "luxon": "^1.25.0",
     "vant": "^3.0.0",
-    "vconsole": "^3.3.4",
     "vue": "^3.0.4",
     "vue-router": "^4.0.2"
   },
