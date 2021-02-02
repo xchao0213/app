@@ -2,7 +2,7 @@ import { createApp } from 'vue';
 import { Toast, Dialog, Icon, Button, Tag, ActionSheet, Popup, Rate, Tab, Tabs, Sticky, List, PullRefresh } from 'vant';
 // 移动端适配
 import 'lib-flexible/flexible.js'
-import 'eruda/eruda.js'
+// import 'eruda/eruda.js'
 import App from './App.vue';
 import router from './router';
 import 'vant/lib/index.css';
