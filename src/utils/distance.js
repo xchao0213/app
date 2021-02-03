@@ -30,9 +30,14 @@ const measurePath = function(points) {
 };
 
 export default function(fromLat, fromLon, toLat, toLon) {
-  if(typeof fromLat === 'number'){
-    return getDistance([fromLat, fromLon], [toLat, toLon]);
-  } else {
-    return measurePath(fromLat);
-  }
+  // if(typeof fromLat === 'number'){
+  //   return getDistance([fromLat, fromLon], [toLat, toLon]);
+  // } else {
+  //   return measurePath(fromLat);
+  // }
+  const nfromLat = parseFloat(fromLat);
+  const nfromLon = parseFloat(fromLon);
+  const ntoLat = parseFloat(toLat);
+  const ntoLon = parseFloat(toLon);
+  return getDistance([nfromLat, nfromLon], [ntoLat, ntoLon]);
 };
