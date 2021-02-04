@@ -175,8 +175,8 @@ export default {
           }
           const setAppMessageShareDataRes = await setAppMessageShareData(params);
           console.log('setAppMessageShareDataRes', setAppMessageShareDataRes);
-          const setTimelineShareDataRes = await setTimelineShareData(params);
-          console.log('setTimelineShareDataRes', setTimelineShareDataRes);
+          // const setTimelineShareDataRes = await setTimelineShareData(params);
+          // console.log('setTimelineShareDataRes', setTimelineShareDataRes);
           const setMenuShareAppMessageRes = await setMenuShareAppMessage(params);
           console.log('setMenuShareAppMessageRes', setMenuShareAppMessageRes);
           const setMenuShareTimelineRes = await setMenuShareTimeline(params);
