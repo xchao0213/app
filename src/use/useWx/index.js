@@ -102,6 +102,9 @@ export function useWx () {
         imgUrl: params.imgUrl, // 分享图标
         success: function () {
           resolve('updateAppMessageShareData ok')
+        },
+        fail: function (err) {
+          reject(err)
         }
       })  
     })
@@ -115,6 +118,9 @@ export function useWx () {
         imgUrl: params.imgUrl, // 分享图标
         success: function () {
           resolve('updateTimelineShareData ok')
+        },
+        fail: function (err) {
+          reject(err)
         }
       })
     })
@@ -129,6 +135,9 @@ export function useWx () {
         imgUrl: params.imgUrl, // 分享图标
         success: function () {
           resolve('onMenuShareAppMessage ok')
+        },
+        fail: function (err) {
+          reject(err)
         }
       })  
     })
@@ -142,6 +151,9 @@ export function useWx () {
         imgUrl: params.imgUrl, // 分享图标
         success: function () {
           resolve('onMenuShareTimeline ok')
+        },
+        fail: function (err) {
+          reject(err)
         }
       })
     })
