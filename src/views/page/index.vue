@@ -89,7 +89,14 @@ export default {
       latitude: 31.23
     }
 
-    const { initSDK, getEnv, getLocation, setAppShareData, setTimelineShareData } = useWx();
+    const { 
+      initSDK,
+      getEnv,
+      getLocation,
+      setAppMessageShareData,
+      setTimelineShareData,
+      setMenuShareAppMessage,
+      setMenuShareTimeline } = useWx();
     // provide('geolocation', geolocation)
 
     const onShowSheet = (actions) => {
@@ -166,10 +173,16 @@ export default {
             link: window.location.href,
             imgUrl: 'https://static.wozaizhao.com/logo.png'
           }
-          const setAppShareDataRes = await setAppShareData(params);
-          console.log('setAppShareDataRes', setAppShareDataRes);
+          const setAppMessageShareDataRes = await setAppMessageShareData(params);
+          console.log('setAppMessageShareDataRes', setAppMessageShareDataRes);
           const setTimelineShareDataRes = await setTimelineShareData(params);
           console.log('setTimelineShareDataRes', setTimelineShareDataRes);
+          const setMenuShareAppMessageRes = await setMenuShareAppMessage(params);
+          console.log('setMenuShareAppMessageRes', setMenuShareAppMessageRes);
+          const setMenuShareTimelineRes = await setMenuShareTimeline(params);
+          console.log('setMenuShareTimelineRes', setMenuShareTimelineRes);
+          
+          
         }
       } catch (e) {
         console.log(e)

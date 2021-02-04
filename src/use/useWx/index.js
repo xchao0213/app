@@ -93,9 +93,9 @@ export function useWx () {
     })
   }
 
-  const setAppShareData = (params) => {
+  const setAppMessageShareData = (params) => {
     return new Promise((resolve, reject) => {
-      wx.onMenuShareAppMessage({ 
+      wx.updateAppMessageShareData({ 
         title: params.title, // 分享标题
         desc: params.desc, // 分享描述
         link: params.link, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
@@ -109,12 +109,39 @@ export function useWx () {
 
   const setTimelineShareData = (params) => {
     return new Promise((resolve, reject) => {
-      wx.onMenuShareTimeline({ 
+      wx.updateTimelineShareData({ 
         title: params.title, // 分享标题
         link: params.link, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
         imgUrl: params.imgUrl, // 分享图标
         success: function () {
           resolve('updateTimelineShareData ok')
+        }
+      })
+    })
+  }
+
+  const setMenuShareAppMessage = (params) => {
+    return new Promise((resolve, reject) => {
+      wx.onMenuShareAppMessage({ 
+        title: params.title, // 分享标题
+        desc: params.desc, // 分享描述
+        link: params.link, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+        imgUrl: params.imgUrl, // 分享图标
+        success: function () {
+          resolve('onMenuShareAppMessage ok')
+        }
+      })  
+    })
+  }
+
+  const setMenuShareTimeline = (params) => {
+    return new Promise((resolve, reject) => {
+      wx.onMenuShareTimeline({ 
+        title: params.title, // 分享标题
+        link: params.link, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+        imgUrl: params.imgUrl, // 分享图标
+        success: function () {
+          resolve('onMenuShareTimeline ok')
         }
       })
     })
@@ -127,7 +154,9 @@ export function useWx () {
     // postMessage,
     getLocation,
     openLocation,
-    setAppShareData,
-    setTimelineShareData
+    setAppMessageShareData,
+    setTimelineShareData,
+    setMenuShareAppMessage,
+    setMenuShareTimeline
   };
 };
