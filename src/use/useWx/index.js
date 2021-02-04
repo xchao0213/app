@@ -15,7 +15,7 @@ export function useWx () {
       const jsApiList = ['scanQRCode', 'openLocation', 'getLocation', 'updateAppMessageShareData', 'updateTimelineShareData', 'onMenuShareAppMessage', 'onMenuShareTimeline']
       getJsConfig(params).then(res => {
         wx.config({
-          debug: true,
+          debug: false,
           appId: res.app_id,
           timestamp: res.timestamp,
           nonceStr: res.nonce_str,
