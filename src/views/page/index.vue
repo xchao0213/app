@@ -173,8 +173,8 @@ export default {
             link: window.location.href,
             imgUrl: 'https://static.wozaizhao.com/logo.png'
           }
-          const setAppMessageShareDataRes = await setAppMessageShareData(params);
-          console.log('setAppMessageShareDataRes', setAppMessageShareDataRes);
+          // const setAppMessageShareDataRes = await setAppMessageShareData(params);
+          // console.log('setAppMessageShareDataRes', setAppMessageShareDataRes);
           // const setTimelineShareDataRes = await setTimelineShareData(params);
           // console.log('setTimelineShareDataRes', setTimelineShareDataRes);
           const setMenuShareAppMessageRes = await setMenuShareAppMessage(params);
