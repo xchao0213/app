@@ -12,7 +12,7 @@ export function useWx () {
       const params = {
         url: window.location.href.split('#')[0]
       }
-      const jsApiList = ['scanQRCode', 'openLocation', 'getLocation', 'onMenuShareAppMessage', 'onMenuShareTimeline']
+      const jsApiList = ['scanQRCode', 'openLocation', 'getLocation', 'updateAppMessageShareData', 'updateTimelineShareData', 'onMenuShareAppMessage', 'onMenuShareTimeline']
       getJsConfig(params).then(res => {
         wx.config({
           debug: true,
