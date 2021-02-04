@@ -35,7 +35,6 @@ export default function(fromLat, fromLon, toLat, toLon) {
   // } else {
   //   return measurePath(fromLat);
   // }
-  console.log('getDistance')
   const nfromLat = parseFloat(fromLat);
   const nfromLon = parseFloat(fromLon);
   const ntoLat = parseFloat(toLat);
