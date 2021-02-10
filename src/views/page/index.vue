@@ -71,7 +71,7 @@ export default {
       loading: false,
       finished: false,
       refreshing: false,
-      pageNum: 0,
+      pageNum: 1,
       pageSize: 15,
       pageHeader: [],
       pageContent: [],
@@ -116,8 +116,8 @@ export default {
     onMounted(async () => {
       const { id } = route.query;
       try {
-        const data = await getPage(id);
-        state.page = data;
+        const page = await getPage(id);
+        state.page = page.data;
         if (state.page) {
           const { ID, title, author, CreatedAt, readCount, abstract } = state.page;
           state.pageHeader.push(
@@ -134,30 +134,31 @@ export default {
             }
           )
         }
-
-          
-        switch (state.page.content) {
-          case 'places':
-            const places = await getPlaces();
-            state.content = {
-              type: 'places',
-              list: places
-            };
-            // 如果在页面中存在筛选元素
-            if (state.content.list && "countyName") {
-              const tabs = uniKey(state.content.list, 'countyName');
-              console.log(tabs)
-              state.pageHeader.push(
-                {
-                  type: 'tabs',
-                  id: 'tabs',
-                  value: {
-                    items: tabs
-                  }
-                }
-              );
+        const cates = page.cates;
+        const items = cates.map(ele => ele.content)
+        // 如果在页面中存在筛选元素
+        // if (state.content.list && "countyName") {
+          // const tabs = uniKey(state.content.list, 'countyName');
+          // console.log(tabs)
+        cates.length > 0 &&  state.pageHeader.push(
+          {
+            type: 'tabs',
+            id: 'tabs',
+            value: {
+              items: ['全部', ...items]
             }
-        }
+          }
+        );
+        // }
+
+        // switch (state.page.content) {
+        //   case 'places':
+        //     const places = await getPlaces();
+        //     state.content = {
+        //       type: 'places',
+        //       list: places
+        //     };
+        // }
 
         fetchPageData();
       
@@ -193,7 +194,8 @@ export default {
     const onChange = (e) => {
       console.log(e)
       state.tabKey = e;
-      state.pageNum = 0;
+      state.pageNum = 1;
+      state.finished = false;
       state.pageContent = [];
       fetchPageData();
     }
@@ -223,18 +225,23 @@ export default {
       return page;
     })
     
-    const fetchPageData = () => {
+    const fetchPageData = async () => {
       let componentData = [];
-      
-      if (state.content.list && state.content.list.length > 0) {
-        const start = state.pageNum * state.pageSize;
-        const end = state.pageNum * state.pageSize + state.pageSize;
-        const listByFilter = state.tabKey === '全部' ? state.content.list : state.content.list.filter((ele) => { return ele.countyName === state.tabKey});
-        const listByPage = listByFilter.filter((ele, i) => i >= start && i < end);
-        if (listByPage.length === 0) {
+      const places = await getPlaces({
+        pageNum: state.pageNum,
+        pageSize: state.pageSize,
+        fieldName: state.page.categoryField ? state.page.categoryField : '',
+        fieldValue: state.tabKey === '全部' ? '' : state.tabKey
+      });
+      // if (state.content.list && state.content.list.length > 0) {
+        // const start = state.pageNum * state.pageSize;
+        // const end = state.pageNum * state.pageSize + state.pageSize;
+        // const listByFilter = state.tabKey === '全部' ? state.content.list : state.content.list.filter((ele) => { return ele.countyName === state.tabKey});
+        // const listByPage = listByFilter.filter((ele, i) => i >= start && i < end);
+        if (places.length === 0) {
           state.finished = true;
         }
-        const placeData = listByPage.map(ele => {
+        const placeData = places.map(ele => {
         const d = distance(geolocation.latitude, geolocation.longitude, ele.lat, ele.lng);
           return {
             type: 'place',
@@ -243,8 +250,8 @@ export default {
           }
         })
         componentData.push(...placeData)
-      }
-      if (state.pageNum === 0) {
+      // }
+      if (state.pageNum === 1) {
         state.pageContent = componentData;
       } else {
         state.pageContent.push(...componentData);

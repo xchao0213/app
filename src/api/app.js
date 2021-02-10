@@ -7,9 +7,10 @@ export function getPage(id) {
   })
 }
 
-export function getPlaces() {
+export function getPlaces(params) {
   return request({
     url: '/places',
-    methods: 'get'
+    methods: 'get',
+    params
   })
 }
