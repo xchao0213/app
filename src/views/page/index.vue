@@ -230,6 +230,7 @@ export default {
       const places = await getPlaces({
         pageNum: state.pageNum,
         pageSize: state.pageSize,
+        type: state.page.contentType,
         fieldName: state.page.categoryField ? state.page.categoryField : '',
         fieldValue: state.tabKey === '全部' ? '' : state.tabKey
       });

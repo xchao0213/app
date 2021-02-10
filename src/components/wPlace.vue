@@ -5,6 +5,8 @@
     </div>
     <p class="name">{{data.orgName}}</p>
     <!-- <van-rate /> -->
+    <div class="desc" v-if="data.businessScope">{{data.businessScope}}</div>
+    <div class="remark" v-if="data.remark">{{data.remark}}</div>
     <div class="contact flex-box">
       <div class="address" @click="openMap">
         <!-- <van-icon name="location" size="18" /> -->
@@ -140,6 +142,10 @@ export default {
     font-size: 20px;
     font-weight: 500;
     padding-bottom: 5px;
+  }
+  .desc{
+    font-size: 18px;
+    color: rgb(78 78 179);
   }
   .contact{
     margin-top: 15px;
