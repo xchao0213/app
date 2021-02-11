@@ -144,7 +144,7 @@ export default {
     padding-bottom: 5px;
   }
   .desc{
-    font-size: 18px;
+    font-size: 16px;
     color: rgb(78 78 179);
   }
   .contact{
