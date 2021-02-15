@@ -231,6 +231,8 @@ export default {
         pageNum: state.pageNum,
         pageSize: state.pageSize,
         type: state.page.contentType,
+        lng: geolocation.longitude,
+        lat: geolocation.latitude,
         fieldName: state.page.categoryField ? state.page.categoryField : '',
         fieldValue: state.tabKey === '全部' ? '' : state.tabKey
       });
