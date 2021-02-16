@@ -182,10 +182,11 @@ export default {
           console.log('setMenuShareTimelineRes', setMenuShareTimelineRes);
 
         }
-        fetchPageData();
 
       } catch (e) {
         console.log(e)
+      } finally {
+        fetchPageData();
       }
       
     })
