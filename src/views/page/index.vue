@@ -159,8 +159,6 @@ export default {
         //       list: places
         //     };
         // }
-
-        fetchPageData();
       
         if (isWeixin()) {
           await initSDK();
@@ -182,9 +180,10 @@ export default {
           console.log('setMenuShareAppMessageRes', setMenuShareAppMessageRes);
           const setMenuShareTimelineRes = await setMenuShareTimeline(params);
           console.log('setMenuShareTimelineRes', setMenuShareTimelineRes);
-          
-          
+
         }
+        fetchPageData();
+
       } catch (e) {
         console.log(e)
       }
