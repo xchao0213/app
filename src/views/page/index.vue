@@ -159,6 +159,9 @@ export default {
         //       list: places
         //     };
         // }
+        setTimeout(() => {
+          fetchPageData();
+        }, 500);
       
         if (isWeixin()) {
           await initSDK();
@@ -186,7 +189,6 @@ export default {
       } catch (e) {
         console.log(e)
       } finally {
-        fetchPageData();
       }
       
     })
