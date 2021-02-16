@@ -7,7 +7,7 @@ import App from './App.vue';
 import router from './router';
 import 'vant/lib/index.css';
 import './style/style.less';
-// eruda.init();
+eruda.init();
 // import wechat from './plugins/wechat';
 // import bridge from './plugins/bridge';
 const app = createApp(App);
