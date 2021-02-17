@@ -35,7 +35,7 @@ import { isWeixin } from '../../utils/index';
 import {
   ref,
   // provide,
-  // watch,
+  watch,
   // nextTick,
   onMounted,
   reactive,
@@ -192,6 +192,11 @@ export default {
       }
       
     })
+
+    watch(geolocation, () => {
+      console.log("count改变了");
+      fetchPageData();
+    });
 
     const onChange = (e) => {
       console.log(e)
