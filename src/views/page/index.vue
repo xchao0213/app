@@ -159,9 +159,9 @@ export default {
         //       list: places
         //     };
         // }
-        setTimeout(() => {
-          fetchPageData();
-        }, 500);
+        // setTimeout(() => {
+        //   fetchPageData();
+        // }, 500);
       
         if (isWeixin()) {
           await initSDK();
@@ -169,6 +169,7 @@ export default {
           const location = await getLocation();
           geolocation.longitude = location.longitude;
           geolocation.latitude = location.latitude;
+          fetchPageData();
           const params = {
             title: `我在找-${state.page.title}`,
             desc: state.page.abstract,
@@ -184,6 +185,8 @@ export default {
           const setMenuShareTimelineRes = await setMenuShareTimeline(params);
           console.log('setMenuShareTimelineRes', setMenuShareTimelineRes);
 
+        } else {
+          fetchPageData();
         }
 
       } catch (e) {
@@ -192,15 +195,6 @@ export default {
       }
       
     })
-
-    watch(()=>geolocation.longitude,()=>{//通过一个函数返回要监听的属性
- 	    console.log('书名改变了')
-       fetchPageData();
-    })
-    // watch(geolocation, () => {
-    //   console.log("count改变了");
-    //   fetchPageData();
-    // });
 
     const onChange = (e) => {
       console.log(e)
