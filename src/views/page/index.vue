@@ -80,14 +80,14 @@ export default {
       phone: ''
     })
 
-    const geolocation = reactive({
-      longitude: 121.47,
-      latitude: 31.23
-    })
-    // let geolocation = {
+    // const geolocation = reactive({
     //   longitude: 121.47,
     //   latitude: 31.23
-    // }
+    // })
+    let geolocation = {
+      longitude: 121.47,
+      latitude: 31.23
+    }
 
     const { 
       initSDK,
@@ -164,11 +164,13 @@ export default {
         // }, 500);
       
         if (isWeixin()) {
+          console.log('isWeixin')
           await initSDK();
           const env = await getEnv();
           const location = await getLocation();
           geolocation.longitude = location.longitude;
           geolocation.latitude = location.latitude;
+          console.log('location', location)
           fetchPageData();
           const params = {
             title: `我在找-${state.page.title}`,
@@ -186,6 +188,7 @@ export default {
           console.log('setMenuShareTimelineRes', setMenuShareTimelineRes);
 
         } else {
+          console.log("not weixin")
           fetchPageData();
         }
 
@@ -231,6 +234,7 @@ export default {
     })
     
     const fetchPageData = async () => {
+      console.log('fetchPageData')
       let componentData = [];
       const places = await getPlaces({
         pageNum: state.pageNum,
