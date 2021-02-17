@@ -193,10 +193,14 @@ export default {
       
     })
 
-    watch(geolocation, () => {
-      console.log("count改变了");
-      fetchPageData();
-    });
+    watch(()=>geolocation.longitude,()=>{//通过一个函数返回要监听的属性
+ 	    console.log('书名改变了')
+       fetchPageData();
+    })
+    // watch(geolocation, () => {
+    //   console.log("count改变了");
+    //   fetchPageData();
+    // });
 
     const onChange = (e) => {
       console.log(e)
