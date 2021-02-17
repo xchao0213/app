@@ -80,14 +80,14 @@ export default {
       phone: ''
     })
 
-    // const geolocation = reactive({
-    //   longitude: 31.23,
-    //   latitude: 121.47
-    // })
-    let geolocation = {
+    const geolocation = reactive({
       longitude: 121.47,
       latitude: 31.23
-    }
+    })
+    // let geolocation = {
+    //   longitude: 121.47,
+    //   latitude: 31.23
+    // }
 
     const { 
       initSDK,
