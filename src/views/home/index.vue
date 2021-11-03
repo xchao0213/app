@@ -8,6 +8,7 @@
 
 <script>
 import { useWx } from '../../use/useWx';
+import { isWeixin } from '../../utils/index';
 
 import { Button } from 'vant';
 export default {
