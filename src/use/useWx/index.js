@@ -53,7 +53,7 @@ export function useWx () {
         }
       })
     })
-  },
+  };
   // const postMessage = (message) => {
   //   wx.miniProgram.postMessage({
   //     data: message
