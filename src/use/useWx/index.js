@@ -43,17 +43,17 @@ export function useWx () {
       })
     })
   };
-  // const scanQrcode = () => {
-  //   return new Promise((resolve, reject) => {
-  //     wx.scanQRCode({
-  //       needResult: 1,
-  //       scanType: ['qrCode'],
-  //       success(res) {
-  //         resolve(res.resultStr)
-  //       }
-  //     })
-  //   })
-  // },
+  const scanQrcode = () => {
+    return new Promise((resolve, reject) => {
+      wx.scanQRCode({
+        needResult: 1,
+        scanType: ['qrCode'],
+        success(res) {
+          resolve(res.resultStr)
+        }
+      })
+    })
+  },
   // const postMessage = (message) => {
   //   wx.miniProgram.postMessage({
   //     data: message
@@ -162,7 +162,7 @@ export function useWx () {
   return {
     initSDK,
     getEnv,
-    // scanQrcode,
+    scanQrcode,
     // postMessage,
     getLocation,
     openLocation,
