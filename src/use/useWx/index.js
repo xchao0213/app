@@ -50,6 +50,9 @@ export function useWx () {
         scanType: ['qrCode'],
         success(res) {
           resolve(res.resultStr)
+        },
+        fail(err) {
+          reject(err)
         }
       })
     })

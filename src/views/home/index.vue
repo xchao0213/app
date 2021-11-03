@@ -48,6 +48,8 @@ export default {
       const onScan = () => {
        scanQrcode().then(res => {
          alert(res)
+       }).catch(err => {
+         alert(err)
        })
        
     }
