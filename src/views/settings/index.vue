@@ -49,16 +49,16 @@ export default {
     [CellGroup.name]: CellGroup,
   },
   mounted() {
-    // this.$bridge.initSDK(this,function (){
-    //   _this.$toast('initSDK ok')
-    // })
+    this.$bridge.initSDK(this,function (){
+      _this.$toast('initSDK ok')
+    })
   },
   methods: {
-    // scan() {
-    //   this.$bridge.scanQrcode(function (res){
-    //     console.log(res)
-    //   })
-    // }
+    scan() {
+      this.$bridge.scanQrcode(function (res){
+        console.log(res)
+      })
+    }
   }
 }
 </script>
