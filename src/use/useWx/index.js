@@ -46,7 +46,7 @@ export function useWx () {
   const scanQrcode = () => {
     return new Promise((resolve, reject) => {
       wx.scanQRCode({
-        needResult: 0,
+        needResult: 1,
         scanType: ['qrCode'],
         success(res) {
           console.log(res.resultStr)
