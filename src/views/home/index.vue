@@ -9,7 +9,12 @@
 <script>
 import { useWx } from '../../use/useWx';
 import { isWeixin } from '../../utils/index';
-
+import {
+  // provide,
+  // nextTick,
+  onMounted,
+  // createCommentVNode,
+} from 'vue';
 import { Button } from 'vant';
 export default {
   name: 'home',
