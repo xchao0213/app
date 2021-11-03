@@ -20,6 +20,7 @@
     "autoprefixer": "^9.0.0",
     "less": "^3.12.2",
     "postcss-pxtorem": "^5.1.1",
+    "vconsole": "^3.9.4",
     "vite": "^1.0.0-rc.13"
   }
 }

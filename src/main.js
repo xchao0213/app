@@ -6,6 +6,9 @@ import App from './App.vue';
 import router from './router';
 import 'vant/lib/index.css';
 import './style/style.less';
+import VConsole from 'vconsole';
+
+const vConsole = new VConsole();
 // import wechat from './plugins/wechat';
 // import { wx } from './plugins/jweixin-1.6.0'; 
 
