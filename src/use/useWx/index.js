@@ -49,7 +49,7 @@ export function useWx () {
         needResult: 1,
         scanType: ['qrCode'],
         success(res) {
-          alert(res.resultStr)
+          console.log(res.resultStr)
           resolve(res.resultStr)
         },
         fail(err) {
