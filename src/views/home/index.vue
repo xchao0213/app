@@ -41,8 +41,10 @@ export default {
       }
       })
       const onScan = () => {
-       const res = await scanQrcode()
-       alert(res)
+       scanQrcode().then(res => {
+         alert(res)
+       })
+       
     }
     return { onScan }
     },
